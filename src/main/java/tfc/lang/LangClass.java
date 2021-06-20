@@ -124,6 +124,61 @@ public class LangClass {
 		return false;
 	}
 	
+	public Object add(Object self, Object other) {
+		// TODO
+		return null;
+	}
+	
+	public Object subtract(Object self, Object other) {
+		// TODO
+		return null;
+	}
+	
+	public Object multiply(Object self, Object other) {
+		// TODO
+		return null;
+	}
+	
+	public Object divide(Object self, Object other) {
+		// TODO
+		return null;
+	}
+	
+	public Object modulus(Object self, Object other) {
+		// TODO
+		return null;
+	}
+	
+	public Object lessThan(Object self, Object other) {
+		// TODO
+		return null;
+	}
+	
+	public Object greaterThan(Object self, Object other) {
+		// TODO
+		return null;
+	}
+	
+	public Object equalTo(Object self, Object other) {
+		// TODO
+		return null;
+	}
+	
+	public Object notEqualTo(Object self, Object other) {
+		// TODO
+		return null;
+	}
+	
+	public Object greaterThanOrEqual(Object self, Object other) {
+		// TODO
+		return null;
+	}
+	
+	public Object lessThanOrEqual(Object self, Object other) {
+		// TODO
+		return null;
+	}
+	
 	public String getName() {
 		return name;
 	}

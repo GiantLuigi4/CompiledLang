@@ -1,17 +1,25 @@
+// public class DoubleTest
 class DoubleTest
+	// public static double test()
 	method test PS()D
+		// double d;
 		local val D
 
 		push
+			// d = 0.5;
 			loadc 0.5 D
 			setl val
-		pop
 
-		push
+			// d += 0.25;
 			loadc 0.25 D
-			add val
+			math val +
+
+			// d *= 0.25;
+			loadc 0.25 D
+			math val *
 		pop
 
+		// return val;
 		loadl val
 		return
 	end

@@ -13,6 +13,7 @@ class ArrayIter
 		push
 			loadc 0
 			setl index
+			loadc 1
 			setl out
 		pop
 
@@ -23,7 +24,7 @@ class ArrayIter
 				loadl array
 				loadl index
 				aget
-				add out
+				math out *
 			pop
 
 			push
@@ -36,14 +37,14 @@ class ArrayIter
 						setl !len
 					pop
 
+					push
+						loadc 1
+						math index +
+					pop
+
 					loadl index
 					loadl !len
 					operator <
-
-					push
-						loadc 1
-						add index
-					pop
 
 					bgoto loop0 true
 				popl

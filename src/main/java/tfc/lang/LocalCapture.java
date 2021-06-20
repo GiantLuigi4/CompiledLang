@@ -40,4 +40,8 @@ public class LocalCapture {
 			if (types.size() >= locals.size()) types.remove(locals.size());
 		}
 	}
+	
+	public LangClass getType(int localId) {
+		return types.get(localId);
+	}
 }

@@ -3,23 +3,23 @@ class Test2
 		local i I
 		push
 			loadc 5
-			add i
+			math i +
 			loadc 64
-			add i
+			math i +
 			loadc 32
-			add i
+			math i +
 			loadc 12
-			add i
+			math i +
 			loadc 16
-			add i
+			math i +
 			loadc 64
-			add i
+			math i +
 			loadc 923
-			add i
+			math i +
 			loadc 203
-			add i
+			math i +
 			loadc 22
-			add i
+			math i +
 		pop
 		loadl i
 		return

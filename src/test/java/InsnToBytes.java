@@ -70,6 +70,8 @@ public class InsnToBytes {
 			string = string.replace("\r", "").trim();
 			if (string.equals("")) continue;
 			
+			if (string.startsWith("//")) continue;
+			
 			if (string.startsWith("class")) {
 				output.write(-1);
 				String name = string.split(" ")[1];
@@ -169,10 +171,13 @@ public class InsnToBytes {
 				output.write(("" + locals.get(name)).getBytes());
 			}
 			
-			else if (string.startsWith("add")) {
+			else if (string.startsWith("math")) {
 				String name = string.split(" ")[1];
+				String operator = string.split(" ")[2];
 				output.write(-15);
 				output.write(("" + locals.get(name)).getBytes());
+				output.write(-3);
+				output.write(operator.getBytes());
 			}
 			
 			else if (string.startsWith("istatic")) {
@@ -202,6 +207,9 @@ public class InsnToBytes {
 						break;
 					case ">=":
 						output.write("4".getBytes());
+						break;
+					case "!=":
+						output.write("5".getBytes());
 						break;
 				}
 			}

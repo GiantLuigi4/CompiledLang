@@ -9,7 +9,7 @@ class Loops
 			label loop0
 			push
 				loadc 1
-				add index
+				math index +
 			pop
 			push
 				loadl index

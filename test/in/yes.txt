@@ -8,14 +8,14 @@ pushl
 	local test2 I
 	push
 		loadc 43
-		add test
+		math test +
 
 		loadl test
 		setl test2
 
 		loadl test2
 		loadc 128
-		add test2
+		math test2 +
 
 		loadl test2
 		setl test

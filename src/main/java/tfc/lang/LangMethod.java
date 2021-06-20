@@ -154,51 +154,24 @@ public class LangMethod {
 					Object lastStackField = stack.get(stack.size() - 1);
 					int localId = Integer.parseInt(instruction.ainfo0);
 					Object local = locals.getLocal(localId);
-					Object out = null;
-					// AAAAAAAAAAAAA
-					// TODO: move this to the type class, because holy lord I am not doing this like 10 times
-					if (lastStackField instanceof Integer) {
-						if (local instanceof Integer) out = (int) local + (int) lastStackField;
-						else if (local instanceof Float) out = (float) local + (int) lastStackField;
-						else if (local instanceof Double) out = (double) local + (int) lastStackField;
-						else if (local instanceof Long) out = (long) local + (int) lastStackField;
-						else if (local instanceof Short) out = (short) local + (int) lastStackField;
-						else if (local instanceof Byte) out = (byte) local + (int) lastStackField;
-					} else if (lastStackField instanceof Double) {
-						if (local instanceof Integer) out = (int) local + (double) lastStackField;
-						else if (local instanceof Float) out = (float) local + (double) lastStackField;
-						else if (local instanceof Double) out = (double) local + (double) lastStackField;
-						else if (local instanceof Long) out = (long) local + (double) lastStackField;
-						else if (local instanceof Short) out = (short) local + (double) lastStackField;
-						else if (local instanceof Byte) out = (byte) local + (double) lastStackField;
-					} else if (lastStackField instanceof Float) {
-						if (local instanceof Integer) out = (int) local + (float) lastStackField;
-						else if (local instanceof Float) out = (float) local + (float) lastStackField;
-						else if (local instanceof Double) out = (double) local + (float) lastStackField;
-						else if (local instanceof Long) out = (long) local + (float) lastStackField;
-						else if (local instanceof Short) out = (short) local + (float) lastStackField;
-						else if (local instanceof Byte) out = (byte) local + (float) lastStackField;
-					} else if (lastStackField instanceof Long) {
-						if (local instanceof Integer) out = (int) local + (long) lastStackField;
-						else if (local instanceof Float) out = (float) local + (long) lastStackField;
-						else if (local instanceof Double) out = (double) local + (long) lastStackField;
-						else if (local instanceof Long) out = (long) local + (long) lastStackField;
-						else if (local instanceof Short) out = (short) local + (long) lastStackField;
-						else if (local instanceof Byte) out = (byte) local + (long) lastStackField;
-					} else if (lastStackField instanceof Byte) {
-						if (local instanceof Integer) out = (int) local + (byte) lastStackField;
-						else if (local instanceof Float) out = (float) local + (byte) lastStackField;
-						else if (local instanceof Double) out = (double) local + (byte) lastStackField;
-						else if (local instanceof Long) out = (long) local + (byte) lastStackField;
-						else if (local instanceof Short) out = (short) local + (byte) lastStackField;
-						else if (local instanceof Byte) out = (byte) local + (byte) lastStackField;
-					} else if (lastStackField instanceof Short) {
-						if (local instanceof Integer) out = (int) local + (short) lastStackField;
-						else if (local instanceof Float) out = (float) local + (short) lastStackField;
-						else if (local instanceof Double) out = (double) local + (short) lastStackField;
-						else if (local instanceof Long) out = (long) local + (short) lastStackField;
-						else if (local instanceof Short) out = (short) local + (short) lastStackField;
-						else if (local instanceof Byte) out = (byte) local + (short) lastStackField;
+					LangClass type = locals.getType(localId);
+					Object out;
+					switch (instruction.ainfo1) {
+						case "+":
+							out = type.add(local, lastStackField);
+							break;
+						case "-":
+							out = type.subtract(local, lastStackField);
+							break;
+						case "/":
+							out = type.divide(local, lastStackField);
+							break;
+						case "*":
+							out = type.multiply(local, lastStackField);
+							break;
+						// TODO: modulus
+						default:
+							throw new RuntimeException("Invalid or no operator provided");
 					}
 					locals.setLocal(localId, out);
 					break;
@@ -239,63 +212,30 @@ public class LangMethod {
 					boolean passes = false;
 					local = stack.get(stack.size() - 2);
 					lastStackField = stack.get(stack.size() - 1);
-					if (lastStackField instanceof Integer) lastStackField = (int) lastStackField - 1;
-					else if (lastStackField instanceof Float) lastStackField = (float) lastStackField - 1;
-					else if (lastStackField instanceof Double) lastStackField = (double) lastStackField - 1;
-					else if (lastStackField instanceof Long) lastStackField = (long) lastStackField - 1;
-					else if (lastStackField instanceof Byte) lastStackField = (byte) ((byte) lastStackField - 1);
-					else if (lastStackField instanceof Short) lastStackField = (short) ((short) lastStackField - 1);
-					// TODO: get this to work with things that aren't integers
+//					if (lastStackField instanceof Integer) lastStackField = (int) lastStackField - 1;
+//					else if (lastStackField instanceof Float) lastStackField = (float) lastStackField - 1;
+//					else if (lastStackField instanceof Double) lastStackField = (double) lastStackField - 1;
+//					else if (lastStackField instanceof Long) lastStackField = (long) lastStackField - 1;
+//					else if (lastStackField instanceof Byte) lastStackField = (byte) ((byte) lastStackField - 1);
+//					else if (lastStackField instanceof Short) lastStackField = (short) ((short) lastStackField - 1);
 					switch (instruction.ainfo0) {
 						case "0":
-							if (lastStackField instanceof Integer) {
-								if (local instanceof Integer) passes = (int) local <= (int) lastStackField;
-								else if (local instanceof Float) passes = (float) local <= (int) lastStackField;
-								else if (local instanceof Double) passes = (double) local <= (int) lastStackField;
-								else if (local instanceof Long) passes = (long) local <= (int) lastStackField;
-								else if (local instanceof Byte) passes = (byte) local <= (int) lastStackField;
-								else if (local instanceof Short) passes = (short) local <= (int) lastStackField;
-							}
+							passes = (boolean) this.clazz.executor.getClassFor(local).lessThanOrEqual(local, lastStackField);
 							break;
 						case "1":
-							if (lastStackField instanceof Integer) {
-								if (local instanceof Integer) passes = (int) local < (int) lastStackField;
-								else if (local instanceof Float) passes = (float) local < (int) lastStackField;
-								else if (local instanceof Double) passes = (double) local < (int) lastStackField;
-								else if (local instanceof Long) passes = (long) local < (int) lastStackField;
-								else if (local instanceof Byte) passes = (byte) local < (int) lastStackField;
-								else if (local instanceof Short) passes = (short) local < (int) lastStackField;
-							}
+							passes = (boolean) this.clazz.executor.getClassFor(local).lessThan(local, lastStackField);
 							break;
 						case "2":
-							if (lastStackField instanceof Integer) {
-								if (local instanceof Integer) passes = (int) local == (int) lastStackField;
-								else if (local instanceof Float) passes = (float) local == (int) lastStackField;
-								else if (local instanceof Double) passes = (double) local == (int) lastStackField;
-								else if (local instanceof Long) passes = (long) local == (int) lastStackField;
-								else if (local instanceof Byte) passes = (byte) local == (int) lastStackField;
-								else if (local instanceof Short) passes = (short) local == (int) lastStackField;
-							}
+							passes = (boolean) this.clazz.executor.getClassFor(local).equalTo(local, lastStackField);
 							break;
 						case "3":
-							if (lastStackField instanceof Integer) {
-								if (local instanceof Integer) passes = (int) local > (int) lastStackField;
-								else if (local instanceof Float) passes = (float) local > (int) lastStackField;
-								else if (local instanceof Double) passes = (double) local > (int) lastStackField;
-								else if (local instanceof Long) passes = (long) local > (int) lastStackField;
-								else if (local instanceof Byte) passes = (byte) local > (int) lastStackField;
-								else if (local instanceof Short) passes = (short) local > (int) lastStackField;
-							}
+							passes = (boolean) this.clazz.executor.getClassFor(local).greaterThan(local, lastStackField);
 							break;
 						case "4":
-							if (lastStackField instanceof Integer) {
-								if (local instanceof Integer) passes = (int) local >= (int) lastStackField;
-								else if (local instanceof Float) passes = (float) local >= (int) lastStackField;
-								else if (local instanceof Double) passes = (double) local >= (int) lastStackField;
-								else if (local instanceof Long) passes = (long) local >= (int) lastStackField;
-								else if (local instanceof Byte) passes = (byte) local >= (int) lastStackField;
-								else if (local instanceof Short) passes = (short) local >= (int) lastStackField;
-							}
+							passes = (boolean) this.clazz.executor.getClassFor(local).greaterThanOrEqual(local, lastStackField);
+							break;
+						case "5":
+							passes = (boolean) this.clazz.executor.getClassFor(local).notEqualTo(local, lastStackField);
 							break;
 					}
 					stack.add(passes);
@@ -303,7 +243,7 @@ public class LangMethod {
 				case -20:
 					Object o = stack.get(stack.size() - 1);
 					if (o instanceof Boolean) {
-						if ((boolean) o) i += Integer.parseInt(instruction.ainfo0);
+						if (!(boolean) o) i += Integer.parseInt(instruction.ainfo0);
 					} else throw new RuntimeException("Expected boolean ontop of stack but got " + o + " instead");
 					break;
 				case -21:
@@ -348,10 +288,10 @@ public class LangMethod {
 					break;
 				case -25:
 					o = stack.get(stack.size() - 2);
-					if (!(o instanceof Object[])) throw new RuntimeException("Expected array as the second to last element of the stack while setting the value of an array");
+					if (!(o instanceof Object[])) throw new RuntimeException("Expected array as the second to last element of the stack while getting the value of an array");
 					array = (Object[]) o;
 					o = stack.get(stack.size() - 1);
-					if (!(o instanceof Integer)) throw new RuntimeException("Expected integer as the last element of the stack while setting the value of an array");
+					if (!(o instanceof Integer)) throw new RuntimeException("Expected integer as the last element of the stack while getting the value of an array");
 					num = (int) o;
 					if (num == -1) stack.add(array.length);
 					else stack.add(array[num]);

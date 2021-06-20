@@ -6,84 +6,84 @@ class Conditions
 			setl index
 		pop
 		push
-			loadc 5
 			loadl index
+			loadc 5
 			operator <
 			boffset 2
 			loadc 1
-			add index
+			math index +
 		pop
 		push
-			loadc 5
 			loadl index
+			loadc 5
 			operator <
 			boffset 2
 			loadc 1
-			add index
+			math index +
 		pop
 		push
-			loadc 5
 			loadl index
+			loadc 5
 			operator <
 			boffset 2
 			loadc 1
-			add index
+			math index +
 		pop
 		push
-			loadc 5
 			loadl index
+			loadc 5
 			operator <
 			boffset 2
 			loadc 1
-			add index
+			math index +
 		pop
 		push
-			loadc 5
 			loadl index
+			loadc 5
 			operator <
 			boffset 2
 			loadc 1
-			add index
+			math index +
 		pop
 		push
-			loadc 5
 			loadl index
+			loadc 5
 			operator <
 			boffset 2
 			loadc 1
-			add index
+			math index +
 		pop
 		push
-			loadc 5
 			loadl index
+			loadc 5
 			operator <
 			boffset 2
 			loadc 1
-			add index
+			math index +
 		pop
 		push
-			loadc 5
 			loadl index
+			loadc 5
 			operator <
 			boffset 2
 			loadc 1
-			add index
+			math index +
 		pop
 		push
-			loadc 5
 			loadl index
+			loadc 5
 			operator <
 			boffset 2
 			loadc 1
-			add index
+			math index +
 		pop
 		push
-			loadc 5
 			loadl index
+			loadc 5
 			operator <
 			boffset 2
 			loadc 1
-			add index
+			math index +
 		pop
 		loadl index
 		return

@@ -17,7 +17,7 @@ class TestClass
 		pop
 		push
 			loadc 64
-			add test
+			math test +
 		pop
 		loadl test
 		return
@@ -26,7 +26,7 @@ class TestClass
 	method test PS(I)I
 		push
 			loadc 32
-			add !0
+			math !0 +
 		pop
 		loadl !0
 		return

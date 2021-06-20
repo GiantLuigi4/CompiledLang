@@ -58,10 +58,14 @@ public class Executor {
 	public String classPath = "";
 	
 	public Executor(int stackSize) {
+		classes.put("long", new LangLong());
+		classes.put("byte", new LangByte());
+		classes.put("short", new LangShort());
 		classes.put("int", new LangInteger());
 		classes.put("float", new LangFloat());
 		classes.put("double", new LangDouble());
 		classes.put("boolean", new LangBoolean());
+		for (LangClass value : classes.values()) value.executor = this;
 	}
 	
 	public LangClass load(byte[] bytes) {
@@ -103,6 +107,17 @@ public class Executor {
 				if (classes.containsKey(className)) return get(className);
 				return load(className);
 		}
+	}
+	
+	public LangClass getClassFor(Object o) {
+		if (o instanceof Integer) return get("int");
+		else if (o instanceof Double) return get("double");
+		else if (o instanceof Long) return get("long");
+		else if (o instanceof Float) return get("float");
+		else if (o instanceof Boolean) return get("boolean");
+		else if (o instanceof Short) return get("short");
+		else if (o instanceof Byte) return get("byte");
+		return null; // TODO
 	}
 	
 	public LangClass load(String className) {
