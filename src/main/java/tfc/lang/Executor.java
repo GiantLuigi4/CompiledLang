@@ -16,7 +16,7 @@ public class Executor {
 	 * -4 == define local (local)
 	 * -5 == push
 	 * -6 == pop
-	 * -7 == load integer (loadi)
+	 * -7 == load constant (loadc)
 	 * -8 == set local (setl)
 	 * -9 == return void (returnV)
 	 * -10 == end method

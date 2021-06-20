@@ -1,20 +1,20 @@
 local test I
 push
-	loadi 53
+	loadc 53
 	setl test
 pop
 
 pushl
 	local test2 I
 	push
-		loadi 43
+		loadc 43
 		add test
 
 		loadl test
 		setl test2
 
 		loadl test2
-		loadi 128
+		loadc 128
 		add test2
 
 		loadl test2

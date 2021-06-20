@@ -2,27 +2,27 @@ class Arrays
 	method test PS()[I
 		local array [I
 		push
-			loadi 4
+			loadc 4
 			marray
 			setl array
 			push
-				loadi 0
-				loadi 12
+				loadc 0
+				loadc 12
 				aset
 			pop
 			push
-				loadi 1
-				loadi 2
+				loadc 1
+				loadc 2
 				aset
 			pop
 			push
-				loadi 2
-				loadi 15
+				loadc 2
+				loadc 15
 				aset
 			pop
 			push
-				loadi 3
-				loadi 12
+				loadc 3
+				loadc 12
 				aset
 			pop
 		pop

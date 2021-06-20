@@ -2,23 +2,23 @@ class Test2
 	method method PS()I
 		local i I
 		push
-			loadi 5
+			loadc 5
 			add i
-			loadi 64
+			loadc 64
 			add i
-			loadi 32
+			loadc 32
 			add i
-			loadi 12
+			loadc 12
 			add i
-			loadi 16
+			loadc 16
 			add i
-			loadi 64
+			loadc 64
 			add i
-			loadi 923
+			loadc 923
 			add i
-			loadi 203
+			loadc 203
 			add i
-			loadi 22
+			loadc 22
 			add i
 		pop
 		loadl i

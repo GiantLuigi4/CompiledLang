@@ -126,10 +126,15 @@ public class InsnToBytes {
 				output.write(-6);
 			}
 			
-			else if (string.startsWith("loadi")) {
+			else if (string.startsWith("loadc")) {
 				String value = string.split(" ")[1];
 				output.write(-7);
 				output.write(value.getBytes());
+				if (string.split(" ").length > 2) {
+					String type = string.split(" ")[2];
+					output.write(-3);
+					output.write(type.getBytes());
+				}
 			} else if (string.startsWith("loadsf")) {
 				String value = string.split(" ")[1];
 				output.write(-17);

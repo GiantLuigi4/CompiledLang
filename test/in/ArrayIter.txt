@@ -11,7 +11,7 @@ class ArrayIter
 		local out I
 
 		push
-			loadi 0
+			loadc 0
 			setl index
 			setl out
 		pop
@@ -41,7 +41,7 @@ class ArrayIter
 					operator <
 
 					push
-						loadi 1
+						loadc 1
 						add index
 					pop
 

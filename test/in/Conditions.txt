@@ -2,87 +2,87 @@ class Conditions
 	method test ()I
 		local index I
 		push
-			loadi 0
+			loadc 0
 			setl index
 		pop
 		push
-			loadi 5
+			loadc 5
 			loadl index
 			operator <
 			boffset 2
-			loadi 1
+			loadc 1
 			add index
 		pop
 		push
-			loadi 5
+			loadc 5
 			loadl index
 			operator <
 			boffset 2
-			loadi 1
+			loadc 1
 			add index
 		pop
 		push
-			loadi 5
+			loadc 5
 			loadl index
 			operator <
 			boffset 2
-			loadi 1
+			loadc 1
 			add index
 		pop
 		push
-			loadi 5
+			loadc 5
 			loadl index
 			operator <
 			boffset 2
-			loadi 1
+			loadc 1
 			add index
 		pop
 		push
-			loadi 5
+			loadc 5
 			loadl index
 			operator <
 			boffset 2
-			loadi 1
+			loadc 1
 			add index
 		pop
 		push
-			loadi 5
+			loadc 5
 			loadl index
 			operator <
 			boffset 2
-			loadi 1
+			loadc 1
 			add index
 		pop
 		push
-			loadi 5
+			loadc 5
 			loadl index
 			operator <
 			boffset 2
-			loadi 1
+			loadc 1
 			add index
 		pop
 		push
-			loadi 5
+			loadc 5
 			loadl index
 			operator <
 			boffset 2
-			loadi 1
+			loadc 1
 			add index
 		pop
 		push
-			loadi 5
+			loadc 5
 			loadl index
 			operator <
 			boffset 2
-			loadi 1
+			loadc 1
 			add index
 		pop
 		push
-			loadi 5
+			loadc 5
 			loadl index
 			operator <
 			boffset 2
-			loadi 1
+			loadc 1
 			add index
 		pop
 		loadl index

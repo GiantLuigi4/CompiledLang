@@ -7,7 +7,7 @@ class FieldTest
     end
 
     method <sinit> SV
-        loadi 72
+        loadc 72
         setsf int1
         returnV
     end

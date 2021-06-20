@@ -2,7 +2,7 @@ class TestClass
 	method testMethod PS()I
 		local test I
 		push
-			loadi 53
+			loadc 53
 			setl test
 		pop
 		loadl test
@@ -12,11 +12,11 @@ class TestClass
 	method main PS()I
 		local test I
 		push
-			loadi 8
+			loadc 8
 			setl test
 		pop
 		push
-			loadi 64
+			loadc 64
 			add test
 		pop
 		loadl test
@@ -25,7 +25,7 @@ class TestClass
 
 	method test PS(I)I
 		push
-			loadi 32
+			loadc 32
 			add !0
 		pop
 		loadl !0
@@ -35,12 +35,12 @@ class TestClass
 	method invokeStaticTest PS()I
 		local test I
 		push
-			loadi 45
+			loadc 45
 			istatic test (I)I
 			setl test
 		pop
 		push
-			loadi 45
+			loadc 45
 			istatic Test2.method ()I
 			setl test
 		pop
