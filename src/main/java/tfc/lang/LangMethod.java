@@ -1,3 +1,5 @@
+package tfc.lang;
+
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,7 +63,7 @@ public class LangMethod {
 	
 	public String toString(boolean bl) {
 		if (bl) return toString();
-		return "LangMethod{" +
+		return "tfc.lang.LangMethod{" +
 				"instructions=" + Arrays.toString(instructions) +
 				", name='" + name + '\'' +
 				", descriptor='" + descriptor + '\'' +
@@ -188,14 +190,14 @@ public class LangMethod {
 					break;
 				case -19:
 					boolean passes = false;
-					lastStackField = stack.get(stack.size() - 2);
-					local = stack.get(stack.size() - 1);
-//					if (local instanceof Integer) local = (int) local - 1;
-//					else if (local instanceof Float) local = (float) local - 1;
-//					else if (local instanceof Double) local = (double) local - 1;
-//					else if (local instanceof Long) local = (long) local - 1;
-//					else if (local instanceof Byte) local = (byte) ((byte) local - 1);
-//					else if (local instanceof Short) local = (short) ((short) local - 1);
+					local = stack.get(stack.size() - 2);
+					lastStackField = stack.get(stack.size() - 1);
+					if (lastStackField instanceof Integer) lastStackField = (int) lastStackField - 1;
+					else if (lastStackField instanceof Float) lastStackField = (float) lastStackField - 1;
+					else if (lastStackField instanceof Double) lastStackField = (double) lastStackField - 1;
+					else if (lastStackField instanceof Long) lastStackField = (long) lastStackField - 1;
+					else if (lastStackField instanceof Byte) lastStackField = (byte) ((byte) lastStackField - 1);
+					else if (lastStackField instanceof Short) lastStackField = (short) ((short) lastStackField - 1);
 					switch (instruction.ainfo0) {
 						case "0":
 							if (lastStackField instanceof Integer) {
@@ -279,16 +281,33 @@ public class LangMethod {
 					while (labelPoints.size() > label + 1) labelPoints.remove(labelPoints.size() - 1);
 					i = point;
 					break;
-				/*
-				 * 0 <=
-				 * 1 <
-				 * 2 =
-				 * 3 >
-				 * 4 >=
-				 * @param name
-				 * @param descriptor
-				 * @param bytes
-				 */
+				case -23:
+					o = stack.get(stack.size() - 1);
+					if (!(o instanceof Integer))
+						throw new RuntimeException("Expected integer while creating array, but got " + o + " instead");
+					num = (int) o;
+					stack.add(new Object[num]);
+					break;
+				case -24:
+					o = stack.get(stack.size() - 3);
+					if (!(o instanceof Object[])) throw new RuntimeException("Expected array as the third to last element of the stack while setting the value of an array");
+					Object[] array = (Object[]) o;
+					o = stack.get(stack.size() - 2);
+					if (!(o instanceof Integer)) throw new RuntimeException("Expected integer as the second to last element of the stack while setting the value of an array");
+					num = (int) o;
+					o = stack.get(stack.size() - 1);
+					array[num] = o;
+					break;
+				case -25:
+					o = stack.get(stack.size() - 2);
+					if (!(o instanceof Object[])) throw new RuntimeException("Expected array as the second to last element of the stack while setting the value of an array");
+					array = (Object[]) o;
+					o = stack.get(stack.size() - 1);
+					if (!(o instanceof Integer)) throw new RuntimeException("Expected integer as the last element of the stack while setting the value of an array");
+					num = (int) o;
+					if (num == -1) stack.add(array.length);
+					else stack.add(array[num]);
+					break;
 				case -10:
 					throw new RuntimeException("Method ended with no return statement");
 				default:

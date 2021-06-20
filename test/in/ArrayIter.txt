@@ -1,0 +1,55 @@
+class ArrayIter
+	method test PS()I
+		local array [I
+
+		push
+			istatic Arrays.test ()[I
+			setl array
+		pop
+
+		local index I
+		local out I
+
+		push
+			loadi 0
+			setl index
+			setl out
+		pop
+
+		push
+			label loop0
+
+			push
+				loadl array
+				loadl index
+				aget
+				add out
+			pop
+
+			push
+				pushl
+					local !len I
+
+					push
+						loadl array
+						alen
+						setl !len
+					pop
+
+					loadl index
+					loadl !len
+					operator <
+
+					push
+						loadi 1
+						add index
+					pop
+
+					bgoto loop0 true
+				popl
+			pop
+		pop
+
+		loadl out
+		return
+	end

@@ -1,3 +1,5 @@
+package tfc.lang;
+
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;

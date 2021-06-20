@@ -1,3 +1,10 @@
+package tfc.lang;
+
+import tfc.lang.natives.ArrayClass;
+import tfc.lang.natives.LangBoolean;
+import tfc.lang.natives.LangFloat;
+import tfc.lang.natives.LangInteger;
+
 import java.io.FileInputStream;
 import java.util.HashMap;
 
@@ -30,9 +37,13 @@ public class Executor {
 	 * bgoto [instruction number] false
 	 * instruction number is a lot more of a pain to use and implement
 	 * TODO: instruction number goto
-	 * TODO: -23 make array with a size equal to the last stack element (marray)
-	 * TODO: -24 sets the element of index equal to the second to last element of the stack of the array in the third to last element of the stack to the value in the last element of the stack (aset)
+	 * -23 make array with a size equal to the last stack element (marray)
+	 * -24 sets the element of index equal to the second to last element of the stack of the array in the third to last element of the stack to the value in the last element of the stack (aset)
 	 * stack[stack.length - 3][stack[stack.length - 2] = stack[stack.length - 1]
+	 * -25 gets the length of an array or the element of an array with an index equal to the top of the stack (aget)
+	 * if stack[stack.length - 2] == -1, add stack[stack.length - 2].length to the top of the stack
+	 * else add stack[stack.length - 2][stack[stack.length - 1]] to the top of the stack
+	 * InsnToBytes class also offers alen which allows you to represent the means of getting the length of an array with two lines
 	 * <p>
 	 * no, the doubled -17 is not a typo
 	 * yes, I thought it was a typo myself
@@ -40,7 +51,7 @@ public class Executor {
 	protected static final byte[] opcodeBytes = new byte[]{
 			-1, -2, -3, -4, -5, -6, -7, -8, -9, -10, -11,
 			-12, -13, -14, -15, -16, -17, -18, -19, -20,
-			-21, -22
+			-21, -22, -23, -24, -25
 	};
 	
 	public static final String langExtension = "langclass";
@@ -70,8 +81,30 @@ public class Executor {
 	}
 	
 	public LangClass getOrLoad(String className) {
-		if (classes.containsKey(className)) return get(className);
-		return load(className);
+		if (className.startsWith("[")) {
+			ArrayClass arrayClass = new ArrayClass(getOrLoad(className.substring(1)));
+			arrayClass.executor = this;
+			return arrayClass;
+		}
+		switch (className) {
+			case "I":
+				return get("int");
+			case "D":
+				return get("double");
+			case "L":
+				return get("long");
+			case "B":
+				return get("boolean");
+			case "K":
+				return get("byte");
+			case "F":
+				return get("float");
+			case "S":
+				return get("short");
+			default:
+				if (classes.containsKey(className)) return get(className);
+				return load(className);
+		}
 	}
 	
 	public LangClass load(String className) {
@@ -92,6 +125,28 @@ public class Executor {
 	}
 	
 	public LangClass get(String className) {
-		return classes.get(className);
+		if (className.startsWith("[")) {
+			ArrayClass arrayClass = new ArrayClass(get(className.substring(1)));
+			arrayClass.executor = this;
+			return arrayClass;
+		}
+		switch (className) {
+			case "I":
+				return get("int");
+			case "D":
+				return get("double");
+			case "L":
+				return get("long");
+			case "B":
+				return get("boolean");
+			case "K":
+				return get("byte");
+			case "F":
+				return get("float");
+			case "S":
+				return get("short");
+			default:
+				return classes.get(className);
+		}
 	}
 }

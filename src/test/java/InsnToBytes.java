@@ -1,3 +1,5 @@
+import tfc.lang.Executor;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -215,6 +217,19 @@ public class InsnToBytes {
 				output.write(-21);
 				labels.put(name, labelNum);
 				output.write(("" + labelNum++).getBytes());
+			}
+			
+			else if (string.startsWith("marray")) {
+				output.write(-23);
+			} else if (string.startsWith("aset")) {
+				output.write(-24);
+			} else if (string.startsWith("aget")) {
+				output.write(-25);
+			} else if (string.startsWith("alen")) {
+				String name = "-1";
+				output.write(-7);
+				output.write((name).getBytes());
+				output.write(-25);
 			}
 			
 			else {

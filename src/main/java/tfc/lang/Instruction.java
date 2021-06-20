@@ -1,3 +1,5 @@
+package tfc.lang;
+
 public class Instruction {
 	public final byte id;
 	public final String ainfo0;
@@ -11,7 +13,7 @@ public class Instruction {
 	
 	@Override
 	public String toString() {
-		return "Instruction{" +
+		return "tfc.lang.Instruction{" +
 				"id=" + id +
 				", ainfo0='" + ainfo0 + '\'' +
 				", ainfo1='" + ainfo1 + '\'' +

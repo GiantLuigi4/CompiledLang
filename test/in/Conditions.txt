@@ -6,80 +6,80 @@ class Conditions
 			setl index
 		pop
 		push
-			loadl index
 			loadi 5
+			loadl index
 			operator <
 			boffset 2
 			loadi 1
 			add index
 		pop
 		push
-			loadl index
 			loadi 5
+			loadl index
 			operator <
 			boffset 2
 			loadi 1
 			add index
 		pop
 		push
-			loadl index
 			loadi 5
+			loadl index
 			operator <
 			boffset 2
 			loadi 1
 			add index
 		pop
 		push
-			loadl index
 			loadi 5
+			loadl index
 			operator <
 			boffset 2
 			loadi 1
 			add index
 		pop
 		push
-			loadl index
 			loadi 5
+			loadl index
 			operator <
 			boffset 2
 			loadi 1
 			add index
 		pop
 		push
-			loadl index
 			loadi 5
+			loadl index
 			operator <
 			boffset 2
 			loadi 1
 			add index
 		pop
 		push
-			loadl index
 			loadi 5
+			loadl index
 			operator <
 			boffset 2
 			loadi 1
 			add index
 		pop
 		push
-			loadl index
 			loadi 5
+			loadl index
 			operator <
 			boffset 2
 			loadi 1
 			add index
 		pop
 		push
-			loadl index
 			loadi 5
+			loadl index
 			operator <
 			boffset 2
 			loadi 1
 			add index
 		pop
 		push
-			loadl index
 			loadi 5
+			loadl index
 			operator <
 			boffset 2
 			loadi 1

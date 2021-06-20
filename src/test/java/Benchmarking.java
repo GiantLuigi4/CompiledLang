@@ -1,4 +1,6 @@
-import java.io.FileInputStream;
+import tfc.lang.Executor;
+import tfc.lang.LangClass;
+
 import java.io.IOException;
 
 public class Benchmarking {
@@ -17,7 +19,7 @@ public class Benchmarking {
 			long avgTime = 0;
 			Executor executor = new Executor(255);
 			executor.classPath = "test/out/";
-//			LangClass clazz;
+//			tfc.lang.LangClass clazz;
 //			{
 //				byte[] bytes;
 //				{
@@ -26,7 +28,7 @@ public class Benchmarking {
 //					stream.read(bytes);
 //					stream.close();
 //				}
-//				clazz = new LangClass(bytes);
+//				clazz = new tfc.lang.LangClass(bytes);
 //			}
 			LangClass clazz = executor.load("Test2");
 			for (int i = 0; i < 25600; i++) {
