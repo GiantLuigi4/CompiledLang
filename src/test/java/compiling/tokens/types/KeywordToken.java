@@ -1,4 +1,4 @@
-package compiling.tokens;
+package compiling.tokens.types;
 
 public class KeywordToken implements IToken {
 	public String name;

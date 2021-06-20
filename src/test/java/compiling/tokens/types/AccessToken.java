@@ -1,4 +1,4 @@
-package compiling.tokens;
+package compiling.tokens.types;
 
 public class AccessToken implements IToken {
 	private final String name;

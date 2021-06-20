@@ -1,4 +1,4 @@
-package compiling.tokens;
+package compiling.tokens.types;
 
 public class SpecialCharacterToken implements IToken {
 	private final char c;

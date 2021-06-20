@@ -1,4 +1,4 @@
-package compiling.tokens;
+package compiling.tokens.types;
 
 public class LiteralToken implements IToken {
 	private final String text;
