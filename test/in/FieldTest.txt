@@ -1,0 +1,13 @@
+class FieldTest
+    field int1 PSI
+
+    method test ()I
+        loadsf int1
+        return
+    end
+
+    method <sinit> SV
+        loadi 72
+        setsf int1
+        returnV
+    end

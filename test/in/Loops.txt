@@ -1,0 +1,23 @@
+class Loops
+	method test PS()I
+		local index I
+		push
+			loadi 0
+			setl index
+		pop
+		push
+			label loop0
+			push
+				loadi 1
+				add index
+			pop
+			push
+				loadl index
+				loadi 5
+				operator <
+				bgoto loop0 true
+			pop
+		pop
+		loadl index
+		return
+	end

@@ -1,0 +1,26 @@
+class Test2
+	method method PS()I
+		local i I
+		push
+			loadi 5
+			add i
+			loadi 64
+			add i
+			loadi 32
+			add i
+			loadi 12
+			add i
+			loadi 16
+			add i
+			loadi 64
+			add i
+			loadi 923
+			add i
+			loadi 203
+			add i
+			loadi 22
+			add i
+		pop
+		loadl i
+		return
+	end

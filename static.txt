@@ -1,0 +1,5 @@
+push
+load_static test.lang.System$out
+loadi 45
+invoke print (LangInteger)V
+pop

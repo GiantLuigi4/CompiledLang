@@ -1,0 +1,90 @@
+class Conditions
+	method test ()I
+		local index I
+		push
+			loadi 0
+			setl index
+		pop
+		push
+			loadl index
+			loadi 5
+			operator <
+			boffset 2
+			loadi 1
+			add index
+		pop
+		push
+			loadl index
+			loadi 5
+			operator <
+			boffset 2
+			loadi 1
+			add index
+		pop
+		push
+			loadl index
+			loadi 5
+			operator <
+			boffset 2
+			loadi 1
+			add index
+		pop
+		push
+			loadl index
+			loadi 5
+			operator <
+			boffset 2
+			loadi 1
+			add index
+		pop
+		push
+			loadl index
+			loadi 5
+			operator <
+			boffset 2
+			loadi 1
+			add index
+		pop
+		push
+			loadl index
+			loadi 5
+			operator <
+			boffset 2
+			loadi 1
+			add index
+		pop
+		push
+			loadl index
+			loadi 5
+			operator <
+			boffset 2
+			loadi 1
+			add index
+		pop
+		push
+			loadl index
+			loadi 5
+			operator <
+			boffset 2
+			loadi 1
+			add index
+		pop
+		push
+			loadl index
+			loadi 5
+			operator <
+			boffset 2
+			loadi 1
+			add index
+		pop
+		push
+			loadl index
+			loadi 5
+			operator <
+			boffset 2
+			loadi 1
+			add index
+		pop
+		loadl index
+		return
+	end

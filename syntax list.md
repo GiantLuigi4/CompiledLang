@@ -1,0 +1,29 @@
+- generics with an undefined quantity of class types
+    - `Tuple<...>`
+    - `cast(arg[0], Player.class)`
+- parameters in constructors are automatically matched to final fields on the class with the same name
+- syntax level annotations
+    - `@UncheckedCasting`
+        - annotation for making all casts unchecked casts (can be applied to class or method)
+    - `@Finalize(Field/Method/All)`
+        - makes all methods/fields/both depending on if you choose field method or all be final by default
+        - useful for making immutable classes
+        - "Nested" being nested classes (if you use this, I will hate you)
+    - `@Static(Field/Method/Nested/All)`
+        - needs a name more similar to Finalize (ending with "ize")
+        - makes all of the specified thing static, depending on what you choose
+        - useful for making utility classes (no instance needed to take full advantage of the class)
+        - "Nested" being nested classes 
+- fields and methods default to public non-final instead of protected non-final
+- multi import
+    - import `java.lang.*Map`
+        - imports everything under the java.lang package which ends with "Map"
+    - import `java.lang.{HashMap,ArrayList}`
+        - imports both HashMap and ArrayList
+- additional parameter keywords
+    - ref
+        - not entirely sure what this is, but it was suggested, I'll have to see if it's smth which is implementable and useful
+    - out
+        - sets the local or field which was passed in as the argument from the source caller instead of setting it as a local in the called method
+        - similar to C#, I believe
+        - this will definitely require an additional opcode
