@@ -1,0 +1,31 @@
+class Arrays
+	method test PS()[I
+		local array [I
+		push
+			loadi 4
+			marray
+			setl array
+			push
+				loadi 0
+				loadi 12
+				aset
+			pop
+			push
+				loadi 1
+				loadi 2
+				aset
+			pop
+			push
+				loadi 2
+				loadi 15
+				aset
+			pop
+			push
+				loadi 3
+				loadi 12
+				aset
+			pop
+		pop
+		loadl array
+		return
+	end

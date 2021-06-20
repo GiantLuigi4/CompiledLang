@@ -28,7 +28,11 @@ public class Executor {
 	 * -22 == goto label or instruction under condition (bgoto)
 	 * bgoto [label name] true
 	 * bgoto [instruction number] false
-	 * instruction number is a lot more of a paint to use
+	 * instruction number is a lot more of a pain to use and implement
+	 * TODO: instruction number goto
+	 * TODO: -23 make array with a size equal to the last stack element (marray)
+	 * TODO: -24 sets the element of index equal to the second to last element of the stack of the array in the third to last element of the stack to the value in the last element of the stack (aset)
+	 * stack[stack.length - 3][stack[stack.length - 2] = stack[stack.length - 1]
 	 * <p>
 	 * no, the doubled -17 is not a typo
 	 * yes, I thought it was a typo myself
