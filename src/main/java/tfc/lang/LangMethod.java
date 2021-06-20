@@ -96,23 +96,7 @@ public class LangMethod {
 			switch (instruction.id) {
 				case -4:
 //					System.out.println(instruction.ainfo1 + " l" + instruction.ainfo0);
-					switch (instruction.ainfo1) {
-						case "I":
-							locals.addLocal(clazz.executor.getOrLoad("int"));
-							break;
-						case "D":
-							locals.addLocal(clazz.executor.getOrLoad("double"));
-							break;
-						case "L":
-							locals.addLocal(clazz.executor.getOrLoad("long"));
-							break;
-						case "F":
-							locals.addLocal(clazz.executor.getOrLoad("float"));
-							break;
-						default:
-							locals.addLocal(clazz.executor.getOrLoad(instruction.ainfo1));
-							break;
-					}
+					locals.addLocal(clazz.executor.getOrLoad(instruction.ainfo1));
 					break;
 				case -5:
 					pushPoints.add(stack.size());
@@ -128,7 +112,33 @@ public class LangMethod {
 					locals.pop();
 					break;
 				case -7:
-					stack.add(Integer.parseInt(instruction.ainfo0));
+					if (instruction.ainfo1 == null) {
+						stack.add(Integer.parseInt(instruction.ainfo0));
+					} else {
+						switch (instruction.ainfo1) {
+							case "I":
+								stack.add(Integer.parseInt(instruction.ainfo0));
+								break;
+							case "S":
+								stack.add(Short.parseShort(instruction.ainfo0));
+								break;
+							case "L":
+								stack.add(Long.parseLong(instruction.ainfo0));
+								break;
+							case "F":
+								stack.add(Float.parseFloat(instruction.ainfo0));
+								break;
+							case "D":
+								stack.add(Double.parseDouble(instruction.ainfo0));
+								break;
+							case "B":
+								stack.add(Boolean.parseBoolean(instruction.ainfo0));
+								break;
+							case "K":
+								stack.add(Byte.parseByte(instruction.ainfo0));
+								break;
+						}
+					}
 					break;
 				case -8:
 					locals.setLocal(Integer.parseInt(instruction.ainfo0), stack.get(stack.size() - 1));
@@ -145,14 +155,51 @@ public class LangMethod {
 					int localId = Integer.parseInt(instruction.ainfo0);
 					Object local = locals.getLocal(localId);
 					Object out = null;
+					// AAAAAAAAAAAAA
+					// TODO: move this to the type class, because holy lord I am not doing this like 10 times
 					if (lastStackField instanceof Integer) {
 						if (local instanceof Integer) out = (int) local + (int) lastStackField;
 						else if (local instanceof Float) out = (float) local + (int) lastStackField;
 						else if (local instanceof Double) out = (double) local + (int) lastStackField;
 						else if (local instanceof Long) out = (long) local + (int) lastStackField;
 						else if (local instanceof Short) out = (short) local + (int) lastStackField;
+						else if (local instanceof Byte) out = (byte) local + (int) lastStackField;
+					} else if (lastStackField instanceof Double) {
+						if (local instanceof Integer) out = (int) local + (double) lastStackField;
+						else if (local instanceof Float) out = (float) local + (double) lastStackField;
+						else if (local instanceof Double) out = (double) local + (double) lastStackField;
+						else if (local instanceof Long) out = (long) local + (double) lastStackField;
+						else if (local instanceof Short) out = (short) local + (double) lastStackField;
+						else if (local instanceof Byte) out = (byte) local + (double) lastStackField;
+					} else if (lastStackField instanceof Float) {
+						if (local instanceof Integer) out = (int) local + (float) lastStackField;
+						else if (local instanceof Float) out = (float) local + (float) lastStackField;
+						else if (local instanceof Double) out = (double) local + (float) lastStackField;
+						else if (local instanceof Long) out = (long) local + (float) lastStackField;
+						else if (local instanceof Short) out = (short) local + (float) lastStackField;
+						else if (local instanceof Byte) out = (byte) local + (float) lastStackField;
+					} else if (lastStackField instanceof Long) {
+						if (local instanceof Integer) out = (int) local + (long) lastStackField;
+						else if (local instanceof Float) out = (float) local + (long) lastStackField;
+						else if (local instanceof Double) out = (double) local + (long) lastStackField;
+						else if (local instanceof Long) out = (long) local + (long) lastStackField;
+						else if (local instanceof Short) out = (short) local + (long) lastStackField;
+						else if (local instanceof Byte) out = (byte) local + (long) lastStackField;
+					} else if (lastStackField instanceof Byte) {
+						if (local instanceof Integer) out = (int) local + (byte) lastStackField;
+						else if (local instanceof Float) out = (float) local + (byte) lastStackField;
+						else if (local instanceof Double) out = (double) local + (byte) lastStackField;
+						else if (local instanceof Long) out = (long) local + (byte) lastStackField;
+						else if (local instanceof Short) out = (short) local + (byte) lastStackField;
+						else if (local instanceof Byte) out = (byte) local + (byte) lastStackField;
+					} else if (lastStackField instanceof Short) {
+						if (local instanceof Integer) out = (int) local + (short) lastStackField;
+						else if (local instanceof Float) out = (float) local + (short) lastStackField;
+						else if (local instanceof Double) out = (double) local + (short) lastStackField;
+						else if (local instanceof Long) out = (long) local + (short) lastStackField;
+						else if (local instanceof Short) out = (short) local + (short) lastStackField;
+						else if (local instanceof Byte) out = (byte) local + (short) lastStackField;
 					}
-//					System.out.println("l"+localId  + " = " + local + " + " + lastStackField + " = " + out);
 					locals.setLocal(localId, out);
 					break;
 				case -16:
@@ -198,6 +245,7 @@ public class LangMethod {
 					else if (lastStackField instanceof Long) lastStackField = (long) lastStackField - 1;
 					else if (lastStackField instanceof Byte) lastStackField = (byte) ((byte) lastStackField - 1);
 					else if (lastStackField instanceof Short) lastStackField = (short) ((short) lastStackField - 1);
+					// TODO: get this to work with things that aren't integers
 					switch (instruction.ainfo0) {
 						case "0":
 							if (lastStackField instanceof Integer) {

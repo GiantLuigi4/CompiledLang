@@ -1,9 +1,6 @@
 package tfc.lang;
 
-import tfc.lang.natives.ArrayClass;
-import tfc.lang.natives.LangBoolean;
-import tfc.lang.natives.LangFloat;
-import tfc.lang.natives.LangInteger;
+import tfc.lang.natives.*;
 
 import java.io.FileInputStream;
 import java.util.HashMap;
@@ -63,6 +60,7 @@ public class Executor {
 	public Executor(int stackSize) {
 		classes.put("int", new LangInteger());
 		classes.put("float", new LangFloat());
+		classes.put("double", new LangDouble());
 		classes.put("boolean", new LangBoolean());
 	}
 	

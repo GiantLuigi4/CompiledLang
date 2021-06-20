@@ -28,17 +28,21 @@ public class Test {
 			clazz = executor.load("Conditions");
 			System.out.println(clazz.runMethod("test", "()I"));
 			clazz = executor.load("Loops");
+			{
+				int i = 0;
+				if (i < 5) i += 1;
+				if (i < 5) i += 1;
+				if (i < 5) i += 1;
+				if (i < 5) i += 1;
+				if (i < 5) i += 1;
+				if (i < 5) i += 1;
+				if (i < 5) i += 1;
+				if (i < 5) i += 1;
+				System.out.println(i);
+			}
 			System.out.println(clazz.runMethod("test", "()I"));
-			int i = 0;
-			if (i < 5) i+=1;
-			if (i < 5) i+=1;
-			if (i < 5) i+=1;
-			if (i < 5) i+=1;
-			if (i < 5) i+=1;
-			if (i < 5) i+=1;
-			if (i < 5) i+=1;
-			if (i < 5) i+=1;
-			System.out.println(i);
+			clazz = executor.load("DoubleTest");
+			System.out.println(clazz.runMethod("test", "()D"));
 		}
 	}
 }

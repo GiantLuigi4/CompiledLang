@@ -1,0 +1,17 @@
+class DoubleTest
+	method test PS()D
+		local val D
+
+		push
+			loadc 0.5 D
+			setl val
+		pop
+
+		push
+			loadc 0.25 D
+			add val
+		pop
+
+		loadl val
+		return
+	end
