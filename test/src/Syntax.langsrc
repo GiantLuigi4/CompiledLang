@@ -1,0 +1,38 @@
+import lang.builtins.*; // this'll be assumed, you won't need to type this manually every time
+import java.lang.*; // this won't be assumed, but using anything from java.lang will make it so that you need to start your program with java
+import java.util.Random;
+
+public class Syntax {
+    int2 := 72; // java equivalent: `public int int2 = 72;`
+	static number = 0; // java equivalent: `public static int number = 0;`
+
+	static void main(String[] args) { // java equivalent: `public static void main(String[] args) {`
+		while (number < 5) {
+			System.out.println(number);
+			number += 1;
+		}
+		System.out.println(random());
+		System.out.println(random());
+		System.out.println(random());
+		System.out.println(random(128));
+		System.out.println(random(128));
+		System.out.println(random(128));
+	}
+
+	public int random(int max = 42, Random random = new Random()) { // this is not possible in java
+		return random.nextInt(max);
+	}
+
+/* 	// closest equivalent to the above
+	public int random() {
+		return new Random().nextInt(42);
+	}
+
+	public int random(int max) {
+		return new Random.nextInt(42);
+	}
+
+	public int random(int max, Random random) {
+		return random.nextInt(max);
+	} */
+}

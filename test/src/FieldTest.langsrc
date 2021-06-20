@@ -1,5 +1,5 @@
 public class FieldTest {
-    static int int1:72; // java equivalent: `public static int int1 = 72;`
+    static int1 = 72; // java equivalent: `public static int int1 = 72;`
 
     static int test() { // java equivalent: `public static int test()`
         return int1; // or static.int1, to tell the compiler to reference it from static context
