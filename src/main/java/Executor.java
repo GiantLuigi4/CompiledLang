@@ -1,4 +1,3 @@
-import java.io.File;
 import java.io.FileInputStream;
 import java.util.HashMap;
 
@@ -31,11 +30,13 @@ public class Executor {
 	 * bgoto [instruction number] false
 	 * instruction number is a lot more of a paint to use
 	 * <p>
-	 * no, the doubled -17 is not a type
+	 * no, the doubled -17 is not a typo
 	 * yes, I thought it was a typo myself
 	 */
 	protected static final byte[] opcodeBytes = new byte[]{
-			-1, -2, -3, -4, -5, -6, -7, -8, -9, -10, -11, -12, -13, -14, -15, -16, -17, -18, -19, -20, -21, -22
+			-1, -2, -3, -4, -5, -6, -7, -8, -9, -10, -11,
+			-12, -13, -14, -15, -16, -17, -18, -19, -20,
+			-21, -22
 	};
 	
 	public static final String langExtension = "langclass";

@@ -27,3 +27,11 @@
         - sets the local or field which was passed in as the argument from the source caller instead of setting it as a local in the called method
         - similar to C#, I believe
         - this will definitely require an additional opcode
+
+- dev tools
+    - "complete" hotswapping 
+        - field additions/deletions
+        - method additions/deletions
+        - default value changes on non static fields
+        - default value changes on static final fields
+        - method body swapping
