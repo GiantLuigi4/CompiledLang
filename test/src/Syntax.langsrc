@@ -3,7 +3,10 @@ import java.lang.*; // this won't be assumed, but using anything from java.lang 
 import java.util.Random;
 
 public class Syntax {
+	// := is optional, you can use = instead, I just like := because it makes it obvious that it is an inferred type
     int2 := 72; // java equivalent: `public int int2 = 72;`
+//	val := null; // this would be an error if it were not a comment
+	val := new Object();
 	static number = 0; // java equivalent: `public static int number = 0;`
 
 	static void main(String[] args) { // java equivalent: `public static void main(String[] args) {`
@@ -17,6 +20,8 @@ public class Syntax {
 		System.out.println(random(128));
 		System.out.println(random(128));
 		System.out.println(random(128));
+		System.out.println(val);
+		System.out.println(val::toString);
 	}
 
 	public int random(int max = 42, Random random = new Random()) { // this is not possible in java

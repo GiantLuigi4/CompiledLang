@@ -30,17 +30,26 @@ public class Executor {
 	 * -20 == offset if (boffset)
 	 * -21 == mark label
 	 * -22 == goto label or instruction under condition (bgoto)
+	 * <p>
 	 * bgoto [label name] true
 	 * bgoto [instruction number] false
 	 * instruction number is a lot more of a pain to use and implement
 	 * TODO: instruction number goto
-	 * -23 make array with a size equal to the last stack element (marray)
-	 * -24 sets the element of index equal to the second to last element of the stack of the array in the third to last element of the stack to the value in the last element of the stack (aset)
+	 * <p>
+	 * -23 == make array with a size equal to the last stack element (marray)
+	 * -24 == sets the element of index equal to the second to last element of the stack of the array in the third to last element of the stack to the value in the last element of the stack (aset)
+	 * <p>
 	 * stack[stack.length - 3][stack[stack.length - 2] = stack[stack.length - 1]
-	 * -25 gets the length of an array or the element of an array with an index equal to the top of the stack (aget)
+	 * <p>
+	 * -25 == gets the length of an array or the element of an array with an index equal to the top of the stack (aget)
+	 * <p>
 	 * if stack[stack.length - 2] == -1, add stack[stack.length - 2].length to the top of the stack
 	 * else add stack[stack.length - 2][stack[stack.length - 1]] to the top of the stack
 	 * InsnToBytes class also offers alen which allows you to represent the means of getting the length of an array with two lines
+	 * <p>
+	 * -26 == load field (loadf)
+	 * -27 == instance
+	 * -28 == set field (setf)
 	 * <p>
 	 * no, the doubled -17 is not a typo
 	 * yes, I thought it was a typo myself
@@ -48,7 +57,7 @@ public class Executor {
 	protected static final byte[] opcodeBytes = new byte[]{
 			-1, -2, -3, -4, -5, -6, -7, -8, -9, -10, -11,
 			-12, -13, -14, -15, -16, -17, -18, -19, -20,
-			-21, -22, -23, -24, -25
+			-21, -22, -23, -24, -25, -26, -27, -28
 	};
 	
 	public static final String langExtension = "langclass";

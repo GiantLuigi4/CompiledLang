@@ -1,5 +1,5 @@
 class Conditions
-	method test ()I
+	method test PS()I
 		local index I
 		push
 			loadc 0

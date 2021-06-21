@@ -44,5 +44,10 @@ public class Test {
 			clazz = executor.load("DoubleTest");
 			System.out.println(clazz.runMethod("test", "()D"));
 		}
+		System.out.println();
+		{
+			LangClass clazz = executor.load("InstanceTest");
+			System.out.println(clazz.runMethod("test", "()I"));
+		}
 	}
 }

@@ -90,12 +90,16 @@ public class InsnToBytes {
 				String descr = desc.substring(desc.indexOf("(") + 1);
 				boolean isComplexType = false;
 				for (char c : descr.toCharArray()) {
+					if (c == '[') continue;
 					if (isComplexType) {
 						if (c == ';') isComplexType = false;
 					} else if (c == 'T') isComplexType = true;
 					else if (c == ')') break;
 					else locals.put("!" + localNum++, localNum - 1);
 				}
+				if (desc.contains("("))
+					if (!desc.substring(0, desc.indexOf("(")).contains("S"))
+						locals.put("!this", localNum++);
 				output.write(-10);
 			} else if (string.startsWith("field")) {
 				output.write(-17);
@@ -147,6 +151,16 @@ public class InsnToBytes {
 				String name = string.split(" ")[1];
 				output.write(-8);
 				output.write(("" + locals.get(name)).getBytes());
+			} else if (string.startsWith("setf")) {
+				String name = string.split(" ")[1];
+				output.write(-28);
+				output.write(name.getBytes());
+				if (string.split(" ").length > 1) {
+					output.write(-3);
+					String localName = string.split(" ")[2];
+					output.write((locals.get(localName) + "").getBytes());
+					if (locals.get(localName) == null) System.out.println(string);
+				}
 			} else if (string.startsWith("setsf")) {
 				String name = string.split(" ")[1];
 				output.write(-18);
@@ -169,6 +183,16 @@ public class InsnToBytes {
 				String name = string.split(" ")[1];
 				output.write(-14);
 				output.write(("" + locals.get(name)).getBytes());
+			} else if (string.startsWith("loadf")) {
+				String name = string.split(" ")[1];
+				output.write(-26);
+				output.write(name.getBytes());
+				if (string.split(" ").length > 2) {
+					output.write(-3);
+					String localName = string.split(" ")[2];
+					output.write((locals.get(localName) + "").getBytes());
+					if (locals.get(localName) == null) System.out.println(string);
+				}
 			}
 			
 			else if (string.startsWith("math")) {
@@ -245,9 +269,16 @@ public class InsnToBytes {
 				output.write(-25);
 			}
 			
-			else {
-				System.out.println("unrecognized instruction: " +string);
+			else if (string.startsWith("instance")) {
+				String name = string.split(" ")[1];
+				String type = string.split(" ")[2];
+				output.write(-27);
+				output.write(name.getBytes());
+				output.write(-3);
+				output.write(type.getBytes());
 			}
+			
+			else System.err.println("WARN: Unrecognized instruction: \"" +string.split(" ")[0] + "\"");
 		}
 		byte[] bytes = output.toByteArray();
 		output.close();

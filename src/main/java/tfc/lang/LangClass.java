@@ -5,10 +5,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class LangClass {
-	private final String name;
-	private final LangMethod[] methods;
+	protected final String name;
+	protected final LangMethod[] methods;
 	protected Executor executor;
 	protected HashMap<String, Object> staticFields = new HashMap<>();
+	protected HashMap<String, Object> instanceFields = new HashMap<>();
 	
 	public LangClass(byte[] bytes) {
 		String name = null;
@@ -72,7 +73,9 @@ public class LangClass {
 					if (isPublic) fieldDesc = fieldDesc.substring(1);
 					boolean isStatic = fieldDesc.startsWith("S");
 					if (isStatic) fieldDesc = fieldDesc.substring(1);
-					staticFields.put(tempName, null);
+					fieldDesc = fieldDesc.substring(1);
+					if (isStatic) staticFields.put(tempName, null);
+					else instanceFields.put(tempName, null);
 					fieldDesc = null;
 				}
 				continue;
@@ -84,6 +87,36 @@ public class LangClass {
 			if (method.getName().equals("<sinit>"))
 				method.run(new LocalCapture());
 		}
+	}
+	
+	public LangObject newInstance(String desc, Object... args) {
+		LangObject object = new LangObject(this);
+		for (String s : instanceFields.keySet()) object.instanceFields.put(s, null);
+		for (LangMethod method : methods) {
+			if (method.getName().equals("<init>") && method.getDescriptor().equals(desc)) {
+				LocalCapture capture = new LocalCapture();
+				int i = 0;
+				for (i = 0; i < args.length; i++) {
+					if (args[i] instanceof Integer)
+						capture.addLocal(executor.get("int"));
+					else if (args[i] instanceof Float)
+						capture.addLocal(executor.get("float"));
+					else if (args[i] instanceof Double)
+						capture.addLocal(executor.get("double"));
+					else if (args[i] instanceof Long)
+						capture.addLocal(executor.get("long"));
+					else if (args[i] instanceof Boolean)
+						capture.addLocal(executor.get("boolean"));
+					else capture.addLocal(executor.getClassFor(args[i]));
+					capture.setLocal(i, args[i]);
+				}
+				capture.addLocal(this);
+				capture.setLocal(i, object);
+				capture.contextThis = object;
+				return (LangObject) method.run(capture);
+			}
+		}
+		throw new RuntimeException("Could not find an init method matching " + desc);
 	}
 	
 	public Object runMethod(String name, String descriptor) {
@@ -110,7 +143,7 @@ public class LangClass {
 						capture.addLocal(executor.get("long"));
 					else if (args[i] instanceof Boolean)
 						capture.addLocal(executor.get("boolean"));
-					else capture.addLocal(null);
+					else capture.addLocal(executor.getClassFor(args[i]));
 					capture.setLocal(i, args[i]);
 				}
 				return method.run(capture);
@@ -120,7 +153,7 @@ public class LangClass {
 	}
 	
 	public boolean isInstance(Object o) {
-		// TODO
+		if (o instanceof LangObject) return ((LangObject) o).clazz.equals(this);
 		return false;
 	}
 	

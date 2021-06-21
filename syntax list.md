@@ -1,6 +1,14 @@
 - generics with an undefined quantity of class types
     - `Tuple<...>`
-    - `cast(arg[0], Player.class)`
+        - like Pair, Triple, etc, but with an undefined number of components
+            - `Tuple<A, B, C, D, E, F, G, [etc], AA, AB, AC, AD, AE, [etc]`
+            - A->tuple.a
+            - B->tuple.b
+            - C->tuple.c
+            - AA->tuple.aa
+            - AB->tuple.ab
+            - AC->tuple.ac
+    - Same would have to wind up going for consumers somehow
 - parameters in constructors are automatically matched to final fields on the class with the same name
 - syntax level annotations
     - `@UncheckedCasting`

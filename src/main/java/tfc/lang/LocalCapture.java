@@ -8,6 +8,7 @@ public class LocalCapture {
 	public ArrayList<Object> locals = new ArrayList<>();
 	public ArrayList<LangClass> types = new ArrayList<>();
 	public ArrayList<Integer> pushPoints = new ArrayList<>();
+	public LangObject contextThis = null;
 	
 	public Object getLocal(int element) {
 //		System.out.println("Getting local " + element);

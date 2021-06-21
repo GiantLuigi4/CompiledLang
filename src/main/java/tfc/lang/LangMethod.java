@@ -37,7 +37,7 @@ public class LangMethod {
 					continue;
 				}
 			}
-			if (b == -4 || b == -7 || b == -8 || b == -14 || b == -15 || b == -16 || b == -17 || b == -18 || b == -19 || b == -20 || b == -21 || b == -22) {
+			if (b == -4 || b == -7 || b == -8 || b == -14 || b == -15 || b == -16 || b == -17 || b == -18 || b == -19 || b == -20 || b == -21 || b == -22 || b == -26 || b == -27 || b == -28) {
 				tempB = b;
 				isFirst = true;
 //			} else if (b == -5 || b == -6 || b == -9 || b == -10 || b == -11 || b == -12 || b == -13) {
@@ -90,12 +90,16 @@ public class LangMethod {
 		HashMap<Integer, Integer> labelLabelStates = new HashMap<>();
 		HashMap<Integer, Integer> labelPoints = new HashMap<>();
 		ArrayList<Integer> pushPoints = new ArrayList<>();
-		int toSkip = 0;
 		for (int i = 0; i < instructions.length; i++) {
 			Instruction instruction = instructions[i];
 			switch (instruction.id) {
 				case -4:
 //					System.out.println(instruction.ainfo1 + " l" + instruction.ainfo0);
+					if (instruction.ainfo1.startsWith("T")) {
+						String ainfo1 = instruction.ainfo1.substring(1, instruction.ainfo1.length() - 1);
+						locals.addLocal(clazz.executor.getOrLoad(ainfo1));
+						break;
+					}
 					locals.addLocal(clazz.executor.getOrLoad(instruction.ainfo1));
 					break;
 				case -5:
@@ -212,12 +216,6 @@ public class LangMethod {
 					boolean passes = false;
 					local = stack.get(stack.size() - 2);
 					lastStackField = stack.get(stack.size() - 1);
-//					if (lastStackField instanceof Integer) lastStackField = (int) lastStackField - 1;
-//					else if (lastStackField instanceof Float) lastStackField = (float) lastStackField - 1;
-//					else if (lastStackField instanceof Double) lastStackField = (double) lastStackField - 1;
-//					else if (lastStackField instanceof Long) lastStackField = (long) lastStackField - 1;
-//					else if (lastStackField instanceof Byte) lastStackField = (byte) ((byte) lastStackField - 1);
-//					else if (lastStackField instanceof Short) lastStackField = (short) ((short) lastStackField - 1);
 					switch (instruction.ainfo0) {
 						case "0":
 							passes = (boolean) this.clazz.executor.getClassFor(local).lessThanOrEqual(local, lastStackField);
@@ -295,6 +293,43 @@ public class LangMethod {
 					num = (int) o;
 					if (num == -1) stack.add(array.length);
 					else stack.add(array[num]);
+					break;
+				case -27: // instance
+					LangClass toInstance = this.clazz.executor.getOrLoad(instruction.ainfo0);
+					stack.add(toInstance.newInstance(instruction.ainfo1, stack.toArray(new Object[0])));
+					break;
+				case -26: // loadf
+					if (instruction.ainfo1 == null) {
+//						o = stack.get(stack.size() - 2);
+						o = locals.contextThis;
+//						if (!(o instanceof LangObject))
+//							throw new RuntimeException("Interaction with jvm objects is NYI");
+						LangObject object = (LangObject) o;
+						stack.add(object.instanceFields.get(instruction.ainfo0));
+					} else {
+						o = locals.getLocal(Integer.parseInt(instruction.ainfo1));
+						if (!(o instanceof LangObject))
+							throw new RuntimeException("Interaction with jvm objects is NYI");
+						LangObject object = (LangObject) o;
+						stack.add(object.instanceFields.get(instruction.ainfo0));
+					}
+				case -28: // setf
+					if (instruction.ainfo1 == null) {
+//						o = stack.get(stack.size() - 2);
+						o = locals.contextThis;
+//						if (!(o instanceof LangObject))
+//							throw new RuntimeException("Interaction with jvm objects is NYI");
+						LangObject object = (LangObject) o;
+						object.instanceFields.replace(instruction.ainfo0, stack.get(stack.size() - 1));
+//						stack.add(object.instanceFields.get(instruction.ainfo0));
+					} else {
+						o = locals.getLocal(Integer.parseInt(instruction.ainfo1));
+						if (!(o instanceof LangObject))
+							throw new RuntimeException("Interaction with jvm objects is NYI");
+						LangObject object = (LangObject) o;
+						object.instanceFields.replace(instruction.ainfo0, stack.get(stack.size() - 1));
+//						stack.add(object.instanceFields.get(instruction.ainfo0));
+					}
 					break;
 				case -10:
 					throw new RuntimeException("Method ended with no return statement");

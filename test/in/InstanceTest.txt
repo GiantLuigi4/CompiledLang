@@ -1,0 +1,47 @@
+class InstanceTest
+	field number P|I
+
+	method <init> (I)TInstanceTest;
+		// "this" is the first local outside the defined parameters, defined as !this
+		push
+			loadl !0
+			setf number !this
+		pop
+		loadl !this
+		return
+	end
+
+	method test PS()I
+		local obj0 TInstanceTest;
+		local obj1 TInstanceTest;
+
+		push
+			loadc 45
+			instance InstanceTest (I)TInstanceTest;
+			setl obj0
+		pop
+
+		push
+			loadc 32
+			instance InstanceTest (I)TInstanceTest;
+			setl obj1
+		pop
+
+		pushl
+			local !obj0number I
+
+			push
+				loadf number obj0
+				setl !obj0number
+
+				loadf number obj1
+				math !obj0number +
+
+				loadl !obj0number
+				setf number obj0
+			pop
+		popl
+
+		loadf number obj0
+		return
+	end

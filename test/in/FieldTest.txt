@@ -1,5 +1,5 @@
 class FieldTest
-    field int1 PSI
+    field int1 PS|I
 
     method test ()I
         loadsf int1
