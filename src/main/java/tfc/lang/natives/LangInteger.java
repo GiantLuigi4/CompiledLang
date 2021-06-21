@@ -1,10 +1,11 @@
 package tfc.lang.natives;
 
+import tfc.lang.Executor;
 import tfc.lang.LangClass;
 
 public class LangInteger extends LangClass {
-	public LangInteger() {
-		super("ÿint".getBytes());
+	public LangInteger(Executor executor) {
+		super("ÿint".getBytes(), executor);
 	}
 	
 	public boolean isInstance(Object o) {

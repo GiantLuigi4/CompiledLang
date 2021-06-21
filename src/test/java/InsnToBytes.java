@@ -279,6 +279,21 @@ public class InsnToBytes {
 				output.write(type.getBytes());
 			}
 			
+			else if (string.startsWith("extends")) {
+				String name = string.split(" ")[1];
+				output.write(-29);
+				output.write(name.getBytes());
+			}
+			
+			else if (string.startsWith("invoke")) {
+				String name = string.split(" ")[1];
+				String desc = string.split(" ")[2];
+				output.write(-30);
+				output.write(name.getBytes());
+				output.write(-3);
+				output.write(desc.getBytes());
+			}
+			
 			else System.err.println("WARN: Unrecognized instruction: \"" +string.split(" ")[0] + "\"");
 		}
 		byte[] bytes = output.toByteArray();

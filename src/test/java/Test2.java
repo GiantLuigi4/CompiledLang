@@ -1,5 +1,6 @@
 import tfc.lang.Executor;
 import tfc.lang.LangClass;
+import tfc.lang.LangObject;
 
 import java.util.Arrays;
 
@@ -17,6 +18,13 @@ public class Test2 {
 			for (int i = 0; i < 4; i++) System.out.println(i);
 			LangClass clazz = executor.load("ArrayIter");
 			Object o = clazz.runMethod("test", "()I");
+			System.out.println(o);
+		}
+		{
+			LangClass clazz = executor.load("InheritanceTest2");
+			LangObject object = clazz.newInstance("()TInheritanceTest2;");
+//			Object o = clazz.runMethod("test1", "()I");
+			Object o = object.invoke("test1", "()I");
 			System.out.println(o);
 		}
 	}

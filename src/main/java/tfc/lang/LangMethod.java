@@ -38,7 +38,7 @@ public class LangMethod {
 					continue;
 				}
 			}
-			if (b == -4 || b == -7 || b == -8 || b == -14 || b == -15 || b == -16 || b == -17 || b == -18 || b == -19 || b == -20 || b == -21 || b == -22 || b == -26 || b == -27 || b == -28) {
+			if (b == -4 || b == -7 || b == -8 || b == -14 || b == -15 || b == -16 || b == -17 || b == -18 || b == -19 || b == -20 || b == -21 || b == -22 || b == -26 || b == -27 || b == -28 || b == -30) {
 				tempB = b;
 				isFirst = true;
 //			} else if (b == -5 || b == -6 || b == -9 || b == -10 || b == -11 || b == -12 || b == -13) {
@@ -188,9 +188,15 @@ public class LangMethod {
 						methodName = methodName.substring(methodName.lastIndexOf(".") + 1);
 						clazz = clazz.executor.getOrLoad(className);
 					}
-					if (instruction.ainfo1.endsWith("V"))
-						clazz.runMethod(methodName, instruction.ainfo1, stack.toArray(new Object[0]));
-					else stack.add(clazz.runMethod(methodName, instruction.ainfo1, stack.toArray(new Object[0])));
+					if (methodName.equals("<init>")) {
+						stack.add(locals.contextThis);
+						clazz.inheritance.get(0).runMethod("<init>", descriptor, stack.toArray(new Object[0]));
+						stack.remove(stack.size() - 1);
+					} else {
+						if (instruction.ainfo1.endsWith("V"))
+							clazz.runMethod(methodName, instruction.ainfo1, stack.toArray(new Object[0]));
+						else stack.add(clazz.runMethod(methodName, instruction.ainfo1, stack.toArray(new Object[0])));
+					}
 					break;
 				case -17:
 					clazz = this.clazz;
@@ -200,7 +206,7 @@ public class LangMethod {
 						fieldName = fieldName.substring(fieldName.lastIndexOf(".") + 1);
 						clazz = clazz.executor.getOrLoad(className);
 					}
-					stack.add(clazz.staticFields.get(fieldName));
+					stack.add(clazz.getStatic(fieldName));
 					break;
 				case -18:
 					clazz = this.clazz;
@@ -210,8 +216,7 @@ public class LangMethod {
 						fieldName = fieldName.substring(fieldName.lastIndexOf(".") + 1);
 						clazz = clazz.executor.getOrLoad(className);
 					}
-					clazz.staticFields.replace(fieldName, stack.get(stack.size() - 1));
-					stack.add(clazz.staticFields.get(fieldName));
+					clazz.setStatic(fieldName, stack.get(stack.size() - 1));
 					break;
 				case -19:
 					boolean passes = false;
@@ -322,6 +327,29 @@ public class LangMethod {
 							throw new RuntimeException("Interaction with jvm objects is NYI");
 						LangObject object = (LangObject) o;
 						object.instanceFields.replace(instruction.ainfo0, stack.get(stack.size() - 1));
+					}
+					break;
+				case -30:
+					clazz = this.clazz;
+					methodName = instruction.ainfo0;
+					String className = clazz.getName();
+					if (methodName.contains(".")) {
+						className = methodName.substring(0, methodName.lastIndexOf("."));
+						methodName = methodName.substring(methodName.lastIndexOf(".") + 1);
+						if (className.equals("super")) {
+							clazz = clazz.inheritance.get(0);
+							className = clazz.getName();
+						} else clazz = clazz.executor.getOrLoad(className);
+					}
+					if (methodName.equals("<init>")) {
+						stack.add(locals.contextThis);
+						clazz.runMethod("<init>", descriptor.substring(0, descriptor.indexOf(")") + 1) + "T" + className + ";", stack.toArray(new Object[0]));
+//						clazz.inheritance.get(0).runMethod("<init>", descriptor, stack.toArray(new Object[0]));
+						stack.remove(stack.size() - 1);
+					} else {
+						if (instruction.ainfo1.endsWith("V"))
+							clazz.runMethod(methodName, instruction.ainfo1, stack.toArray(new Object[0]));
+						else stack.add(clazz.runMethod(methodName, instruction.ainfo1, stack.toArray(new Object[0])));
 					}
 					break;
 				case -10:

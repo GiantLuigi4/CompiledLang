@@ -1,10 +1,13 @@
 class Conditions
 	method test PS()I
+		// index := 0;
 		local index I
 		push
 			loadc 0
 			setl index
 		pop
+
+		// if (index < 5) i++;
 		push
 			loadl index
 			loadc 5
@@ -13,6 +16,8 @@ class Conditions
 			loadc 1
 			math index +
 		pop
+
+		// if (index < 5) i++;
 		push
 			loadl index
 			loadc 5
@@ -21,6 +26,8 @@ class Conditions
 			loadc 1
 			math index +
 		pop
+
+		// if (index < 5) i++;
 		push
 			loadl index
 			loadc 5
@@ -29,6 +36,8 @@ class Conditions
 			loadc 1
 			math index +
 		pop
+
+		// if (index < 5) i++;
 		push
 			loadl index
 			loadc 5
@@ -37,6 +46,8 @@ class Conditions
 			loadc 1
 			math index +
 		pop
+
+		// if (index < 5) i++;
 		push
 			loadl index
 			loadc 5
@@ -45,6 +56,8 @@ class Conditions
 			loadc 1
 			math index +
 		pop
+
+		// if (index < 5) i++;
 		push
 			loadl index
 			loadc 5
@@ -53,6 +66,8 @@ class Conditions
 			loadc 1
 			math index +
 		pop
+
+		// if (index < 5) i++;
 		push
 			loadl index
 			loadc 5
@@ -61,6 +76,8 @@ class Conditions
 			loadc 1
 			math index +
 		pop
+
+		// if (index < 5) i++;
 		push
 			loadl index
 			loadc 5
@@ -69,6 +86,8 @@ class Conditions
 			loadc 1
 			math index +
 		pop
+
+		// if (index < 5) i++;
 		push
 			loadl index
 			loadc 5
@@ -77,6 +96,8 @@ class Conditions
 			loadc 1
 			math index +
 		pop
+
+		// if (index < 5) i++;
 		push
 			loadl index
 			loadc 5
@@ -85,6 +106,8 @@ class Conditions
 			loadc 1
 			math index +
 		pop
+
+		// return index
 		loadl index
 		return
 	end

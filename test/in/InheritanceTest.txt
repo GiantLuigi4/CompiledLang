@@ -1,0 +1,17 @@
+class InheritanceTest
+	method <init> ()TInheritanceTest;
+		loadl !this
+		return
+	end
+
+	method test P()I
+		local number I
+
+		push
+			loadc 45
+			setl number
+		pop
+
+		loadl number
+		return
+	end

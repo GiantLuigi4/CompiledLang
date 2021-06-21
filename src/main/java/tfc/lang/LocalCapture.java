@@ -25,6 +25,7 @@ public class LocalCapture {
 	
 	public void addLocal(LangClass clazz) {
 //		System.out.println("Adding a new local of type null");//TODO
+		if (clazz == null) throw new RuntimeException("Cannot add a classless local");
 		locals.add(null);
 		types.add(clazz);
 	}

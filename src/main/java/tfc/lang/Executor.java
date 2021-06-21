@@ -50,6 +50,8 @@ public class Executor {
 	 * -26 == load field (loadf)
 	 * -27 == instance
 	 * -28 == set field (setf)
+	 * -29 == extends
+	 * -30 == invoke
 	 * <p>
 	 * no, the doubled -17 is not a typo
 	 * yes, I thought it was a typo myself
@@ -57,7 +59,8 @@ public class Executor {
 	protected static final byte[] opcodeBytes = new byte[]{
 			-1, -2, -3, -4, -5, -6, -7, -8, -9, -10, -11,
 			-12, -13, -14, -15, -16, -17, -18, -19, -20,
-			-21, -22, -23, -24, -25, -26, -27, -28
+			-21, -22, -23, -24, -25, -26, -27, -28, -29,
+			-30
 	};
 	
 	public static final String langExtension = "langclass";
@@ -67,18 +70,18 @@ public class Executor {
 	public String classPath = "";
 	
 	public Executor(int stackSize) {
-		classes.put("long", new LangLong());
-		classes.put("byte", new LangByte());
-		classes.put("short", new LangShort());
-		classes.put("int", new LangInteger());
-		classes.put("float", new LangFloat());
-		classes.put("double", new LangDouble());
-		classes.put("boolean", new LangBoolean());
+		classes.put("long", new LangLong(this));
+		classes.put("byte", new LangByte(this));
+		classes.put("short", new LangShort(this));
+		classes.put("int", new LangInteger(this));
+		classes.put("float", new LangFloat(this));
+		classes.put("double", new LangDouble(this));
+		classes.put("boolean", new LangBoolean(this));
 		for (LangClass value : classes.values()) value.executor = this;
 	}
 	
 	public LangClass load(byte[] bytes) {
-		LangClass clazz = new LangClass(bytes);
+		LangClass clazz = new LangClass(bytes, this);
 		if (classes.containsKey(clazz.getName()))
 			throw new RuntimeException("Cannot load a class twice without unloading it first");
 		classes.put(clazz.getName(), clazz);
@@ -93,7 +96,7 @@ public class Executor {
 	
 	public LangClass getOrLoad(String className) {
 		if (className.startsWith("[")) {
-			ArrayClass arrayClass = new ArrayClass(getOrLoad(className.substring(1)));
+			ArrayClass arrayClass = new ArrayClass(getOrLoad(className.substring(1)), this);
 			arrayClass.executor = this;
 			return arrayClass;
 		}
@@ -126,6 +129,7 @@ public class Executor {
 		else if (o instanceof Boolean) return get("boolean");
 		else if (o instanceof Short) return get("short");
 		else if (o instanceof Byte) return get("byte");
+		else if (o instanceof LangObject) return ((LangObject) o).clazz;
 		return null; // TODO
 	}
 	
@@ -148,7 +152,7 @@ public class Executor {
 	
 	public LangClass get(String className) {
 		if (className.startsWith("[")) {
-			ArrayClass arrayClass = new ArrayClass(get(className.substring(1)));
+			ArrayClass arrayClass = new ArrayClass(get(className.substring(1)), this);
 			arrayClass.executor = this;
 			return arrayClass;
 		}

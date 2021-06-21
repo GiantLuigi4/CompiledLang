@@ -1,10 +1,11 @@
 package tfc.lang.natives;
 
+import tfc.lang.Executor;
 import tfc.lang.LangClass;
 
 public class LangBoolean extends LangClass {
-	public LangBoolean() {
-		super("ÿboolean".getBytes());
+	public LangBoolean(Executor executor) {
+		super("ÿboolean".getBytes(), executor);
 	}
 	
 	public boolean isInstance(Object o) {

@@ -10,8 +10,10 @@ public class LangClass {
 	protected Executor executor;
 	protected HashMap<String, Object> staticFields = new HashMap<>();
 	protected HashMap<String, Object> instanceFields = new HashMap<>();
+	protected ArrayList<LangClass> inheritance = new ArrayList<>();
 	
-	public LangClass(byte[] bytes) {
+	public LangClass(byte[] bytes, Executor executor) {
+		this.executor = executor;
 		String name = null;
 		ByteArrayOutputStream stream = new ByteArrayOutputStream();
 		String temp = "";
@@ -23,7 +25,7 @@ public class LangClass {
 		String fieldDesc = null;
 		for (byte b : bytes) {
 			if (tempB != 0) {
-				if (b == -1 || b == -2 || b == -3 || b == -10 || b == -17) {
+				if (b == -1 || b == -2 || b == -3 || b == -10 || b == -17 || b == -29) {
 					if (b == -3) {
 						temp = new String(stream.toByteArray());
 						isFirst = false;
@@ -31,6 +33,11 @@ public class LangClass {
 					} else {
 						if (isFirst) {
 							if (tempB == -1) name = stream.toString();
+							else if (tempB == -29) {
+								String className = stream.toString();
+								if (!className.equals("null")) inheritance.add(executor.getOrLoad(className));
+								else inheritance.add(null);
+							}
 						} else {
 							if (tempB == -2) {
 								tempName = temp;
@@ -61,7 +68,7 @@ public class LangClass {
 				stream.write(b);
 				continue;
 			}
-			if (b == -1 || b == -2 || b == -17) {
+			if (b == -1 || b == -2 || b == -17 || b == -29) {
 				tempB = b;
 				isFirst = true;
 				stream.reset();
@@ -81,6 +88,12 @@ public class LangClass {
 				continue;
 			}
 		}
+		if (inheritance.isEmpty()) {
+			try {
+				inheritance.add(executor.getOrLoad("tupul.lang.Object"));
+			} catch (Throwable ignored) {
+			}
+		}
 		this.name = name;
 		this.methods = methods.toArray(new LangMethod[0]);
 		for (LangMethod method : methods) {
@@ -89,9 +102,43 @@ public class LangClass {
 		}
 	}
 	
+	public void populateFields(HashMap<String, Object> fields, boolean instance) {
+		if (instance) instanceFields.forEach(fields::put);
+		else staticFields.forEach(fields::put);
+		for (LangClass langClass : inheritance) langClass.populateFields(fields, instance);
+	}
+	
+	public Object getStatic(String name) {
+		if (staticFields.containsKey(name)) return staticFields.get(name);
+		else for (LangClass langClass : inheritance)
+			if (langClass.hasStatic(name))
+				return langClass.getStatic(name);
+		throw new RuntimeException("The requested field does not exist");
+	}
+	
+	public void setStatic(String name, Object object) {
+		if (staticFields.containsKey(name)) {
+			staticFields.replace(name, object);
+			return;
+		}
+		else
+			for (LangClass langClass : inheritance)
+				if (langClass.hasStatic(name)) {
+					langClass.setStatic(name, object);
+					return;
+				}
+		throw new RuntimeException("The requested field does not exist");
+	}
+	
+	public boolean hasStatic(String name) {
+		if (staticFields.containsKey(name)) return true;
+		for (LangClass langClass : inheritance) if (langClass.hasStatic(name)) return true;
+		return false;
+	}
+	
 	public LangObject newInstance(String desc, Object... args) {
 		LangObject object = new LangObject(this);
-		for (String s : instanceFields.keySet()) object.instanceFields.put(s, null);
+		populateFields(object.instanceFields, true);
 		for (LangMethod method : methods) {
 			if (method.getName().equals("<init>") && method.getDescriptor().equals(desc)) {
 				LocalCapture capture = new LocalCapture();
@@ -119,11 +166,27 @@ public class LangClass {
 		throw new RuntimeException("Could not find an init method matching " + desc);
 	}
 	
+	public boolean hasMethod(String name, String descriptor) {
+		for (LangMethod method : methods) {
+			if (method.getName().equals(name) && method.getDescriptor().equals(descriptor))
+				return true;
+		}
+		for (LangClass langClass : inheritance) {
+			if (langClass.hasMethod(name, descriptor))
+				return true;
+		}
+		return false;
+	}
+	
 	public Object runMethod(String name, String descriptor) {
 		for (LangMethod method : methods) {
 			if (method.getName().equals(name) && method.getDescriptor().equals(descriptor)) {
 				return method.run(new LocalCapture());
 			}
+		}
+		for (LangClass langClass : inheritance) {
+			if (langClass.hasMethod(name, descriptor))
+				langClass.runMethod(name, descriptor);
 		}
 		throw new RuntimeException("Method " + name + descriptor + " not found");
 	}
@@ -149,11 +212,25 @@ public class LangClass {
 				return method.run(capture);
 			}
 		}
+		for (LangClass langClass : inheritance) {
+			if (langClass.hasMethod(name, descriptor))
+				return langClass.runMethod(name, descriptor, args);
+		}
 		throw new RuntimeException("Method " + name + descriptor + " not found");
 	}
 	
 	public boolean isInstance(Object o) {
-		if (o instanceof LangObject) return ((LangObject) o).clazz.equals(this);
+		if (o instanceof LangObject) {
+			return ((LangObject) o).clazz.inheritsFrom(this);
+		}
+		return false;
+	}
+	
+	private boolean inheritsFrom(LangClass langClass) {
+		if (this.equals(langClass)) return true;
+		for (LangClass aClass : inheritance)
+			if (aClass.inheritsFrom(langClass))
+				return true;
 		return false;
 	}
 	

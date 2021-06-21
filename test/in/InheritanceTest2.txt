@@ -1,0 +1,25 @@
+class InheritanceTest2
+	extends InheritanceTest
+	method <init> ()TInheritanceTest2;
+		invoke super.<init> ()TInheritanceTest;
+		loadl !this
+		return
+	end
+
+	method test1 P()I
+		local number I
+
+		push
+			loadl !this
+			invoke test ()I
+			setl number
+		pop
+
+		push
+			loadc 10
+			math number +
+		pop
+
+		loadl number
+		return
+	end
