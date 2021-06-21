@@ -15,6 +15,7 @@ public class LocalCapture {
 		return locals.get(element);
 	}
 	
+	@SuppressWarnings("UnusedReturnValue")
 	public Object setLocal(int element, Object o) {
 //		System.out.println("Setting local " + element + " to " + o);
 		if (types.get(element).isInstance(o)) return locals.set(element, o);

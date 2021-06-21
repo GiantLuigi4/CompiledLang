@@ -3,6 +3,7 @@ package tfc.lang.natives;
 import tfc.lang.LangClass;
 
 public class ArrayClass extends LangClass {
+	@SuppressWarnings("FieldCanBeLocal")
 	private final LangClass heldClass;
 	
 	public ArrayClass(LangClass heldClass) {

@@ -3,6 +3,7 @@ import tfc.lang.Executor;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class InsnToBytes {
 	// class TestClass
@@ -288,7 +289,7 @@ public class InsnToBytes {
 	
 	private static ArrayList<File> list(File f) {
 		ArrayList<File> files = new ArrayList<>();
-		for (File file : f.listFiles()) {
+		for (File file : Objects.requireNonNull(f.listFiles())) {
 			if (file.isDirectory()) files.addAll(list(file));
 			else files.add(file);
 		}

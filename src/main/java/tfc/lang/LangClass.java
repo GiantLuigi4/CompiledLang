@@ -95,7 +95,7 @@ public class LangClass {
 		for (LangMethod method : methods) {
 			if (method.getName().equals("<init>") && method.getDescriptor().equals(desc)) {
 				LocalCapture capture = new LocalCapture();
-				int i = 0;
+				int i;
 				for (i = 0; i < args.length; i++) {
 					if (args[i] instanceof Integer)
 						capture.addLocal(executor.get("int"));

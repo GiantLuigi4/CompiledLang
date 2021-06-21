@@ -1,10 +1,8 @@
 import tfc.lang.Executor;
 import tfc.lang.LangClass;
 
-import java.io.IOException;
-
 public class Benchmarking {
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 		{
 			long avgTime = 0;
 			for (int i = 0; i < 25600; i++) {
@@ -41,6 +39,7 @@ public class Benchmarking {
 		}
 	}
 	
+	@SuppressWarnings("UnusedReturnValue")
 	private static int method() {
 		int i = 0;
 		i += 5;

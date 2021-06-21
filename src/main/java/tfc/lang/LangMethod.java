@@ -8,6 +8,7 @@ import java.util.HashMap;
 public class LangMethod {
 	private final Instruction[] instructions;
 	private final String name, descriptor;
+	@SuppressWarnings({"unused", "RedundantSuppression"})
 	private boolean isStatic, isPublic;
 	protected LangClass clazz;
 	
@@ -300,10 +301,7 @@ public class LangMethod {
 					break;
 				case -26: // loadf
 					if (instruction.ainfo1 == null) {
-//						o = stack.get(stack.size() - 2);
 						o = locals.contextThis;
-//						if (!(o instanceof LangObject))
-//							throw new RuntimeException("Interaction with jvm objects is NYI");
 						LangObject object = (LangObject) o;
 						stack.add(object.instanceFields.get(instruction.ainfo0));
 					} else {
@@ -315,20 +313,15 @@ public class LangMethod {
 					}
 				case -28: // setf
 					if (instruction.ainfo1 == null) {
-//						o = stack.get(stack.size() - 2);
 						o = locals.contextThis;
-//						if (!(o instanceof LangObject))
-//							throw new RuntimeException("Interaction with jvm objects is NYI");
 						LangObject object = (LangObject) o;
 						object.instanceFields.replace(instruction.ainfo0, stack.get(stack.size() - 1));
-//						stack.add(object.instanceFields.get(instruction.ainfo0));
 					} else {
 						o = locals.getLocal(Integer.parseInt(instruction.ainfo1));
 						if (!(o instanceof LangObject))
 							throw new RuntimeException("Interaction with jvm objects is NYI");
 						LangObject object = (LangObject) o;
 						object.instanceFields.replace(instruction.ainfo0, stack.get(stack.size() - 1));
-//						stack.add(object.instanceFields.get(instruction.ainfo0));
 					}
 					break;
 				case -10:

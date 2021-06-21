@@ -2,6 +2,7 @@ import tfc.lang.Executor;
 import tfc.lang.LangClass;
 
 public class Test {
+	@SuppressWarnings("ConstantConditions")
 	public static void main(String[] args) {
 		Executor executor = new Executor(255);
 		executor.classPath = "test/out/";
