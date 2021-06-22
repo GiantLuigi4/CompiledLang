@@ -1,0 +1,10 @@
+class TestClass1
+	method testMethod PS()I
+		local test I
+		push
+			loadc 53
+			setl test
+		pop
+		loadl test
+		return
+	end
