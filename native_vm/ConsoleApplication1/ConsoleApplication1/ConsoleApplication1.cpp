@@ -11,10 +11,10 @@
 
 using namespace std;
 
+// https://www.cplusplus.com/doc/tutorial/files/
 string read(string filename) {
 	string line;
 	string contents;
-	// https://www.cplusplus.com/doc/tutorial/files/
 	ifstream myfile("TestClass1.langclass");
 	if (myfile.is_open()) {
 		while (getline(myfile, line)) {
