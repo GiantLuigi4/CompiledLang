@@ -1,0 +1,77 @@
+package tupul.lang;
+
+// class tupul.lang.String P
+public class String {
+	// field chars IF|[C
+	private final char[] chars;
+
+	// TODO: constructor which takes a byte[]
+
+	// method <init> ([C)Ttupul.lang.String;
+	public String(char[] chars) {
+		char[] charsIn = new char[chars.length];
+		charsIn = {chars}; // Functionally equal to ArrayCopy
+		this.chars = charsIn;
+	}
+
+	// method <init> ()Ttupul.lang.String;
+	public String() {
+		// push
+		// loadc 0
+		// marray
+		// setf chars
+		// pop
+		chars = new char[0];
+	}
+
+	@Cast(String.class, char[].class) // annotation to have the compiler allow casting to char[] as well as to make the vm call this method when the String is requested as a char[]
+	// `new String("hello")` would be equivalent to `new String((char[]) "hello")`
+	// `new String((char[]) "hello")` would be equivalent to `new String("hello".getChars())`
+	public char[] getChars() {
+		char[] charsOut = new char[chars.length];
+		charsOut = {chars}; // Functionally equal to ArrayCopy
+		return charsOut;
+	}
+
+	@Cast(char[].class, String.class) // annotation to have the compiler allow casting from char[] as well as to make the vm call this method when the String is requested as a char[]
+	// `String s = new char[] {'h', 'e', 'l', 'l', 'o'}` is equivalent to `String s = "hello"`
+	public String fromChars(char[] chars) {
+		char[] charsOut = new char[chars.length];
+		charsOut = {chars}; // Functionally equal to ArrayCopy
+		return new String(charsOut);
+	}
+
+	@Cast(Object.class, String.class) // annotation to have the compiler allow casting from char[] as well as to make the vm call this method when the String is requested as a char[]
+	// `String s = 45` is equivalent to `String s = "45"`
+	public String fromObject(Object o) {
+		return o.toString();
+	}
+
+	// TODO: byte[] casts
+
+	@Overload("addition") // annotation so the vm knows this is the addition method as well as so the compiler knows there's an addition overload
+	// "hi" + ". " == "hi. "
+	public String add(char[] chars) {
+		char[] newStr = new char[this.chars.length + chars.length];
+		charsOut = {this.chars, chars}; // Easy means of natively handling merging two arrays
+		return new String(charsOut);
+	}
+
+	@Overload("addition") // annotation so the vm knows this is the addition method as well as so the compiler knows there's an addition overload
+	public String add(char c) {
+		char[] newStr = new char[this.chars.length + 1];
+		charsOut = {this.chars, [c]}; // c is in brackets to create an one element char[] out of it
+		return new String(charsOut);
+	}
+
+	public char charAt(int index) {
+		return chars[index];
+	}
+
+	public String replace(String targ, String newVal) {
+		// TODO
+		return null;
+	}
+
+	// TODO: getBytes method
+}
