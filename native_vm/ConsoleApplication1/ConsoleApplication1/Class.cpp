@@ -8,7 +8,6 @@
 using namespace std;
 
 void Class::load(string text) {
-	int size = (int)text.length();
 	string name = "";
 	string stream = "";
 	string temp = "";
@@ -17,6 +16,7 @@ void Class::load(string text) {
 	string fieldDesc = "";
 	bool isFirst = false;
 	int tempB = 0;
+	int size = (int)text.length();
 	for (int index = 0; index < size; index++) {
 		int b = (int) text.at(index);
 		// TODO
@@ -63,7 +63,7 @@ void Class::load(string text) {
 				if (isStatic) methodDesc = substring(methodDesc, 1);
 				Method method = Method();
 				method.clazz = this;
-//				method.load(tempName, methodDesc, stream, isPublic, isStatic);
+				method.load(tempName, methodDesc, stream, isPublic, isStatic);
 				methods.push_back(method);
 				methodDesc = "";
 			}

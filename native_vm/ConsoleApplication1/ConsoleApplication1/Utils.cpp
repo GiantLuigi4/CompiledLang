@@ -49,3 +49,16 @@ string substring(string src, int start, int end) {
 	for (int i = start; i < end; i++) out += src.at(i);
 	return out;
 }
+
+// https://www.tutorialspoint.com/how-to-check-if-a-c-cplusplus-string-is-an-int#:~:text=There%20are%20several%20methods%20to%20check%20that%20string,the%20string%20is%20present%20in%20main%20%28%29%20function.
+bool isInt(string str) {
+	if (str.length() == 0) return false;
+	for (int i = 0; i < str.length(); i++) if (!isdigit(str[i])) return false;
+	return true;
+}
+
+bool opcodeExists(int op) {
+	// TODO: figure out how to unhardcode this
+	for (int i = 0; i < 30; i++) if (opcodeBytes[i] == op) return true;
+	return false;
+}

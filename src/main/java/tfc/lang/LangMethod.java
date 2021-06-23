@@ -54,6 +54,7 @@ public class LangMethod {
 		isStatic = true;
 		isPublic = true;
 		instructions = insns.toArray(new Instruction[0]);
+		System.out.println(this.toString());
 	}
 	
 	public LangMethod(String tempName, String methodDesc, byte[] toByteArray, boolean isPublic, boolean isStatic) {
@@ -78,7 +79,10 @@ public class LangMethod {
 			for (Instruction instruction : instructions) {
 				builder.write(instruction.id);
 				if (instruction.ainfo0 != null) builder.write(instruction.ainfo0.getBytes());
-				if (instruction.ainfo1 != null) builder.write(instruction.ainfo1.getBytes());
+				if (instruction.ainfo1 != null) {
+					builder.write(-3);
+					builder.write(instruction.ainfo1.getBytes());
+				}
 			}
 		} catch (Throwable ignored) {
 		}
