@@ -54,7 +54,6 @@ public class LangMethod {
 		isStatic = true;
 		isPublic = true;
 		instructions = insns.toArray(new Instruction[0]);
-		System.out.println(this.toString());
 	}
 	
 	public LangMethod(String tempName, String methodDesc, byte[] toByteArray, boolean isPublic, boolean isStatic) {
