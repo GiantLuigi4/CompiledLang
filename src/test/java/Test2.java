@@ -27,5 +27,10 @@ public class Test2 {
 			Object o = object.invoke("test1", "()I");
 			System.out.println(o);
 		}
+		{
+			LangClass clazz = executor.load("CompilerTest1");
+			Object o = clazz.runMethod("test", "()[I");
+			System.out.println(Arrays.toString((Object[]) o));
+		}
 	}
 }
