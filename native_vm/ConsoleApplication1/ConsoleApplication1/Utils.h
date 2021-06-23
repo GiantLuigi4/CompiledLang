@@ -4,4 +4,7 @@
 #include <fstream>
 
 extern int opcodeBytes[];
-std::string read(std::string filename);
+std::string read(std::string);
+bool startsWith(std::string, std::string);
+std::string substring(std::string, int);
+std::string substring(std::string, int, int);

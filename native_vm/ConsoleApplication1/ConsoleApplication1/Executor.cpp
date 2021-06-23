@@ -17,6 +17,7 @@ Executor::~Executor() {
 
 Class Executor::load(char* filename) {
 	Class clazz = Class();
+	clazz.executor = this;
 	clazz.load(read(filename));
 	classes.insert({filename, clazz});
 	return clazz;

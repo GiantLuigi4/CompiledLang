@@ -26,7 +26,26 @@ string read(string filename) {
 			contents += line + '\n';
 		}
 		myfile.close();
-	}
-	else cout << "Unable to open file";
+	} else cout << "Unable to open file\n" + filename + "\n";
 	return contents;
+}
+
+bool startsWith(string src, string prefix) {
+	// if the prefix is longer then the string, then it is clearly not at the start of the string
+	if (prefix.length() > src.length()) return false;
+	int length = (int) prefix.length();
+	// iterate over all characters in both strings up until the length of val, if any of the characters in the target string do not match the provided prefix, then return false
+	for (int i = 0; i < length; i++) if (prefix.at(i) != src.at(i)) return false;
+	return true;
+}
+
+string substring(string src, int start) {
+	int length = (int) src.length();
+	return substring(src, start, length);
+}
+
+string substring(string src, int start, int end) {
+	string out = "";
+	for (int i = start; i < end; i++) out += src.at(i);
+	return out;
 }

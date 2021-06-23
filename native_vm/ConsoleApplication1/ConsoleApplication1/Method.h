@@ -1,7 +1,9 @@
 #pragma once
-class Method {
-public:
-	Method();
-	~Method();
-};
 
+class Class;
+
+class Method {
+	public: Method();
+	public: ~Method();
+	public: Class* clazz;
+};

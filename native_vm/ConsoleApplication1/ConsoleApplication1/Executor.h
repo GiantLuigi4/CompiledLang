@@ -5,11 +5,10 @@
 using namespace std;
 
 class Executor {
-public:
-	Executor();
-	~Executor();
-	std::map<char*, Class> classes;
-	Class load(char* filename);
-	Class get(char* filename);
-	Class getOrLoad(char* filename);
+	public: Executor();
+	public: ~Executor();
+	public: map<char*, Class> classes;
+	public: Class load(char* filename);
+	public: Class get(char* filename);
+	public: Class getOrLoad(char* filename);
 };

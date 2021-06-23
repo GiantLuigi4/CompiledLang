@@ -16,7 +16,7 @@ using namespace std;
 
 int main() {
 	cout << "TupulVM V0.0\n";
-	cout << "WARNING: TVM is very early dev, and will likely not work at all.\n";
+	cout << "WARNING: Native TVM is very early dev, and will likely not work at all.\n";
 
 	Executor executor = Executor();
 
