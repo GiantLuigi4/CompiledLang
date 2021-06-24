@@ -34,8 +34,8 @@ int main() {
 	c = executor.getOrLoad((char*) "TestClass1.langclass");
 	c = executor.getOrLoad((char*) "TestClass1.langclass");
 	c = executor.getOrLoad((char*) "TestClass1.langclass");
-	Method m = c.methods[0];
-	cout << m.run(LocalCapture()).intVal;
+	Method m = c.methods[3];
+	cout << (int) m.run(LocalCapture()).intVal;
 
 	return 0;
 }

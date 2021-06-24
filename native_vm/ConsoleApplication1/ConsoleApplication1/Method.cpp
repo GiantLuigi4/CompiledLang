@@ -17,7 +17,7 @@ Method::~Method() {
 
 void Method::load(string name, string desc, string text, bool isPublic, bool isStatic) {
 	this->name = name;
-	this->descriptor = descriptor;
+	this->descriptor = desc;
 	string stream = "";
 	string temp = "";
 	int tempB = 0;
@@ -116,6 +116,11 @@ Object Method::run(LocalCapture locals) {
 				if (ainfo1 == "") {
 					Object o = Object();
 					o.intVal = (int*) instruction.ainfo0I;
+					o.clazz = clazz->executor->getOrLoad((char*)"int.langclass").pointer;
+					cout << o.clazz->name;
+					cout << "\n";
+					cout << clazz->executor;
+					cout << "\n";
 					stack.push_back(o);
 					break;
 				} else {
@@ -124,6 +129,9 @@ Object Method::run(LocalCapture locals) {
 							Object o = Object();
 							o.intVal = (int*) instruction.ainfo0I;
 							stack.push_back(o);
+							o.clazz = clazz->executor->getOrLoad((char*)"int.langclass").pointer;
+							cout << o.clazz->name;
+							cout << "\n";
 							break;
 						} default: break; // TODO
 						// TODO: other cases
@@ -138,7 +146,60 @@ Object Method::run(LocalCapture locals) {
 			case -14:
 				stack.push_back(locals.getLocal(instruction.ainfo0I));
 				break;
-			case -10:
+			case -15: {
+				Object lastStackField = stack[stack.size() - 1];
+				int localId = instruction.ainfo0I;
+				Object local = locals.getLocal(localId);
+//				Class* type = locals.getType(localId);
+				Class* type = local.clazz;
+				Object out;
+
+				cout << type;
+				cout << "\n";
+				cout << type->nativeName;
+				cout << "\n";
+
+				cout << "l" + instruction.ainfo0 + " = ";
+				cout << (int)lastStackField.intVal;
+				cout << " " + instruction.ainfo1 + " ";
+				cout << (int)local.intVal;
+				cout << "; // = ";
+
+				switch (instruction.ainfo1.at(0)) {
+					case '+':
+						out = type->add(local, lastStackField);
+						cout << (int)out.intVal;
+						break;
+					case '-':
+						out = type->subtract(local, lastStackField);
+						break;
+					case '/':
+//						out = type->divide(local, lastStackField);
+						break;
+					case '*':
+//						out = type->multiply(local, lastStackField);
+						break;
+						// TODO: modulus
+					default:
+						throw new runtime_error("Invalid or no operator provided");
+				}
+				cout << "\n";
+				locals.setLocal(localId, out);
+				break;
+			} case -16: {
+				Class* clazz = this->clazz;
+				string methodName = instruction.ainfo0;
+				if (contains(methodName, '.')) {
+					string className = substring(methodName, 0, lastIndexOf(methodName, '.'));
+					methodName = substring(methodName, lastIndexOf(methodName, '.') + 1);
+					clazz = clazz->executor->getOrLoad((char*) className.c_str()).pointer;
+				}
+//				if (endsWith(instruction.ainfo1, "V"))
+//					clazz->runMethod(methodName, instruction.ainfo1, stack);
+//				else 
+					stack.push_back(clazz->runMethod(methodName, instruction.ainfo1, stack));
+				break;
+			} case -10:
 				cout << "Method ended with no return statement\n";
 				throw new runtime_error("Method ended with no return statement");
 			default:

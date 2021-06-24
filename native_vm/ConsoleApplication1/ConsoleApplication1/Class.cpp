@@ -5,6 +5,7 @@
 #include "Method.h"
 #include "Utils.h"
 #include <vector>
+#include "LocalCapture.h"
 using namespace std;
 
 void Class::load(string text) {
@@ -104,7 +105,67 @@ void Class::load(string text) {
 }
 
 Class::Class() {
+	pointer = this;
 }
 
 Class::~Class() {
+}
+
+Object Class::runMethod(string name, string descriptor, vector<Object> args) {
+	for (Method method : methods) {
+		cout << method.name + method.descriptor + "\n";
+		cout << name + descriptor + "\n";
+		if (method.name == name && method.descriptor == descriptor) {
+			LocalCapture capture = LocalCapture();
+			for (int i = 0; i < args.size(); i++) {
+			/*	if (args[i] instanceof Integer)
+					capture.addLocal(executor.get("int"));
+				else if (args[i] instanceof Float)
+					capture.addLocal(executor.get("float"));
+				else if (args[i] instanceof Double)
+					capture.addLocal(executor.get("double"));
+				else if (args[i] instanceof Long)
+					capture.addLocal(executor.get("long"));
+				else if (args[i] instanceof Boolean)
+					capture.addLocal(executor.get("boolean"));
+				else capture.addLocal(executor.getClassFor(args[i]));
+				capture.setLocal(i, args[i]);*/
+				capture.addLocal(args[i].clazz);
+				capture.setLocal(i, args[i]);
+			}
+			return method.run(capture);
+		}
+	}
+//	for (Class langClass : inheritance) {
+//		if (langClass.hasMethod(name, descriptor))
+//			return langClass.runMethod(name, descriptor, args);
+//	}
+	throw new runtime_error("Method " + name + descriptor + " not found");
+}
+
+Object Class::add(Object self, Object other) {
+	cout << nativeName;
+	switch (nativeName.at(0)) {
+		case 'I':
+			// TODO: check other object's native name
+			Object out = Object();
+			out.intVal = (int*)((int)self.intVal + (int)other.intVal);
+			out.clazz = this;
+			return out;
+			break;
+	}
+	throw new runtime_error("Operator Overloads are NYI");
+}
+
+Object Class::subtract(Object self, Object other) {
+	switch (nativeName.at(0)) {
+	case 'I':
+		// TODO: check other object's native name
+		Object out = Object();
+		out.intVal = (int*)((int)self.intVal - (int)other.intVal);
+		out.clazz = this;
+		return out;
+		break;
+	}
+	throw new runtime_error("Operator Overloads are NYI");
 }
