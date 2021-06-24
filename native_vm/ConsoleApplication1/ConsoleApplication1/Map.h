@@ -10,4 +10,3 @@ class Map {
 	public: list<int> keys;
 	public: list<int> values;
 };
-
