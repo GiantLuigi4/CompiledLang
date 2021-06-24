@@ -12,4 +12,5 @@ class Executor {
 	public: Class load(char* filename);
 	public: Class get(char* filename);
 	public: Class getOrLoad(char* filename);
+	public: int classesLoaded;
 };

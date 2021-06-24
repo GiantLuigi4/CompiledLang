@@ -145,16 +145,11 @@ Object Class::runMethod(string name, string descriptor, vector<Object> args) {
 	cout << this->name + "\n";
 	cout << methods.size();
 	cout << "\n";
-	cout << this->methods.at(0).asPointer();
+	cout << this->methods.at(0).name;
 	cout << "Iterating methods\n";
-	string contents = read("TestClass1.langclass");
-
-	ofstream myfile1;
-	myfile1.open("example.txt");
-	
 	for (int iter = 0; iter < methods.size(); iter++) {
-		Method method = methods.at(0);
 		cout << "H\n";
+		Method* method = methods.at(iter).asPointer();
 //		myfile1 << method.name;
 //		myfile1 << method.descriptor;
 //		myfile1 << "\n";
@@ -162,8 +157,8 @@ Object Class::runMethod(string name, string descriptor, vector<Object> args) {
 //		cout << method->descriptor + "\n";
 //		cout << method->name + method->descriptor + "\n";
 		
-		if (method.name == name && method.descriptor == descriptor) {
-			cout << "Method " + method.name + method.descriptor + " passed\n";
+		if (method->name == name && method->descriptor == descriptor) {
+			cout << "Method " + method->name + method->descriptor + " passed\n";
 			LocalCapture capture = LocalCapture();
 			int i = 0;
 			for (Object arg : args) {
@@ -190,13 +185,12 @@ Object Class::runMethod(string name, string descriptor, vector<Object> args) {
 				else capture.addLocal(executor.getClassFor(args[i]));
 				capture.setLocal(i, args[i]);
 			}*/
-			return method.run(capture);
+			return method->run(capture);
 		}
 	}
 //	for (Class langClass: inheritance) {
 //		if (langClass.hasMethod(name, descriptor))
 //			return langClass.runMethod(name, descriptor, args);
 //	}
-	myfile1.close();
 	throw new runtime_error("Method " + name + descriptor + " not found");
 }

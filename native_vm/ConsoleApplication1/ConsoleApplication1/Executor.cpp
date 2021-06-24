@@ -13,6 +13,7 @@ Executor::Executor() {
 	clazz.executor = this;
 	clazz.nativeName = "I";
 	classes.push_back(clazz);
+	classesLoaded++;
 //	cout << "HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH";
 //	cout << classes[0].name;
 }
@@ -28,11 +29,14 @@ Class Executor::load(char* filename) {
 	clazz.executor = this;
 	clazz.load(read(filename));
 	classes.push_back(clazz);
+	classesLoaded++;
 	return clazz;
 }
 
 Class Executor::getOrLoad(char* filename) {
-	for (Class c : classes) {
+//	for (Class c : classes) {
+	for (int i = 0; i < classesLoaded; i++) {
+		Class c = classes[i];
 /*		cout << c.name;
 		cout << "\n";
 		cout << c.nativeName;
