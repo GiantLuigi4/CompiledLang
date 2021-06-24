@@ -13,8 +13,9 @@
 #include "Class.h"
 #include "LocalCapture.h"
 #include <list>
-using namespace std;
 
+#include <windows.h>
+#include <filesystem>
 using namespace std;
 
 int main() {
@@ -35,7 +36,17 @@ int main() {
 	c = executor.getOrLoad((char*) "TestClass1.langclass");
 	c = executor.getOrLoad((char*) "TestClass1.langclass");
 	Method m = c.methods[0];
-	cout << m.run(LocalCapture()).intVal;
+	cout << m.name + "\n";
+	cout << (int) m.run(LocalCapture()).intVal;
+	cout << "\n";
+	m = c.methods[1];
+	cout << m.name + "\n";
+	cout << (int) m.run(LocalCapture()).intVal;
+	cout << "\n";
+	m = c.methods[3];
+	cout << m.name + "\n";
+	cout << (int) m.run(LocalCapture()).intVal;
+	cout << "\n";
 
 	return 0;
 }

@@ -13,8 +13,8 @@ Executor::Executor() {
 	clazz.executor = this;
 	clazz.nativeName = "I";
 	classes.push_back(clazz);
-	cout << "HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH";
-	cout << classes[0].name;
+//	cout << "HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH";
+//	cout << classes[0].name;
 }
 
 Executor::~Executor() {

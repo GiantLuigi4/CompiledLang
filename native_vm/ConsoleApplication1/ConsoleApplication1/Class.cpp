@@ -5,6 +5,8 @@
 #include "Method.h"
 #include "Utils.h"
 #include <vector>
+#include "Object.h"
+#include "LocalCapture.h"
 using namespace std;
 
 void Class::load(string text) {
@@ -100,11 +102,101 @@ void Class::load(string text) {
 	// TODO: inheritance defaulting
 	// TODO: call static init
 	this->name = name;
-	cout << this->name + "\n";
+//	cout << this->name + "\n";
 }
 
 Class::Class() {
 }
 
 Class::~Class() {
+}
+
+Object Class::add(Object self, Object other) {
+	switch (nativeName.at(0)) {
+		case 'I':
+			// TODO: check other object's native name
+			Object out = Object();
+			out.intVal = (int*)((int)self.intVal + (int)other.intVal);
+			out.clazz = this;
+			return out;
+			break;
+	}
+	throw new runtime_error("Operator Overloads are NYI");
+}
+
+Object Class::subtract(Object self, Object other) {
+	switch (nativeName.at(0)) {
+		case 'I':
+			// TODO: check other object's native name
+			Object out = Object();
+			out.intVal = (int*)((int)self.intVal - (int)other.intVal);
+			out.clazz = this;
+			return out;
+			break;
+	}
+	throw new runtime_error("Operator Overloads are NYI");
+}
+
+Class* Class::asPointer() {
+	return this;
+}
+
+Object Class::runMethod(string name, string descriptor, vector<Object> args) {
+	cout << this->name + "\n";
+	cout << methods.size();
+	cout << "\n";
+	cout << this->methods.at(0).asPointer();
+	cout << "Iterating methods\n";
+	string contents = read("TestClass1.langclass");
+
+	ofstream myfile1;
+	myfile1.open("example.txt");
+	
+	for (int iter = 0; iter < methods.size(); iter++) {
+		Method method = methods.at(0);
+		cout << "H\n";
+//		myfile1 << method.name;
+//		myfile1 << method.descriptor;
+//		myfile1 << "\n";
+//		cout << name + descriptor + "\n";
+//		cout << method->descriptor + "\n";
+//		cout << method->name + method->descriptor + "\n";
+		
+		if (method.name == name && method.descriptor == descriptor) {
+			cout << "Method " + method.name + method.descriptor + " passed\n";
+			LocalCapture capture = LocalCapture();
+			int i = 0;
+			for (Object arg : args) {
+//				cout << arg.clazz->name;
+				capture.addLocal(arg.clazz);
+				capture.setLocal(i, arg);
+				cout << "Filling local ";
+				cout << i;
+				cout << "\n";
+				cout << "Local Type " + arg.clazz->name + "\n";
+				i++;
+			}
+/*			for (int i = 0; i < args.size(); i++) {
+				if (args[i].clazz.name == "int")
+					capture.addLocal(executor.get("int"));
+				else if (args[i] instanceof Float)
+					capture.addLocal(executor.get("float"));
+				else if (args[i] instanceof Double)
+					capture.addLocal(executor.get("double"));
+				else if (args[i] instanceof Long)
+					capture.addLocal(executor.get("long"));
+				else if (args[i] instanceof Boolean)
+					capture.addLocal(executor.get("boolean"));
+				else capture.addLocal(executor.getClassFor(args[i]));
+				capture.setLocal(i, args[i]);
+			}*/
+			return method.run(capture);
+		}
+	}
+//	for (Class langClass: inheritance) {
+//		if (langClass.hasMethod(name, descriptor))
+//			return langClass.runMethod(name, descriptor, args);
+//	}
+	myfile1.close();
+	throw new runtime_error("Method " + name + descriptor + " not found");
 }

@@ -12,7 +12,7 @@ Object LocalCapture::getLocal(int index) {
 	return locals[index];
 }
 
-Class LocalCapture::getType(int index) {
+Class* LocalCapture::getType(int index) {
 	return types[index];
 }
 
@@ -23,6 +23,11 @@ Object LocalCapture::setLocal(int index, Object o) {
 }
 
 void LocalCapture::addLocal(Class clazz) {
+	types.push_back(clazz.asPointer());
+	locals.push_back(Object());
+}
+
+void LocalCapture::addLocal(Class* clazz) {
 	types.push_back(clazz);
 	locals.push_back(Object());
 }

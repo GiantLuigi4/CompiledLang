@@ -15,6 +15,17 @@ int opcodeBytes[30] = {
 };
 
 // https://www.cplusplus.com/doc/tutorial/files/
+// TODO: use the following code so that it should work in dev envro (granted it's windows only)
+/*
+	// https://stackoverflow.com/questions/1528298/get-path-of-executable
+	wchar_t path[MAX_PATH] = { 0 };
+	GetModuleFileNameW(NULL, path, MAX_PATH);
+	cout << "\n\n\n";
+	for (int i = 0; i < MAX_PATH; i++) {
+		cout << (char)path[i];
+	}
+	cout << "\n";
+*/
 string read(string filename) {
 	string line;
 	string contents;
@@ -22,7 +33,7 @@ string read(string filename) {
 	ifstream myfile(filename);
 	if (myfile.is_open()) {
 		while (getline(myfile, line)) {
-			cout << line << '\n';
+//			cout << line << '\n';
 			contents += line + '\n';
 		}
 		myfile.close();
@@ -37,6 +48,38 @@ bool startsWith(string src, string prefix) {
 	// iterate over all characters in both strings up until the length of val, if any of the characters in the target string do not match the provided prefix, then return false
 	for (int i = 0; i < length; i++) if (prefix.at(i) != src.at(i)) return false;
 	return true;
+}
+
+bool endsWith(string src, string prefix) {
+	// if the prefix is longer then the string, then it is clearly not at the start of the string
+	if (prefix.length() > src.length()) return false;
+	int length = (int)prefix.length();
+	// iterate over all characters in both strings up until the length of val, if any of the characters in the target string do not match the provided prefix, then return false
+	for (int i = 1; i <= length; i++) {
+		if (prefix.at(((int)prefix.length()) - i) != src.at(((int)src.length()) - i)) {
+			return false;
+		}
+	}
+	return true;
+}
+
+// TODO: convert this to a regex check
+bool contains(string src, char check) {
+/*	// if the check is longer then the string, then it is clearly not in the string
+	if (check.length() > src.length()) return false;
+	int length = (int)check.length();
+	// iterate over all characters in both strings up until the length of val, if any of the characters in the target string do not match the provided prefix, then return false
+	for (int i = 0; i < length; i++) if (check.at(i) != src.at(i)) return false;*/
+	for (int i = 0; i < (int)src.length(); i++)
+		if (src.at(i) == check)
+			return true;
+	return false;
+}
+
+int lastIndexOf(string src, char check) {
+	for (int i = ((int)src.length()) - 1; i >= 0; i++)
+		if (src.at(i) == check) return i;
+	return -1;
 }
 
 bool equals(string src, string targ) {
@@ -72,6 +115,8 @@ string substring(string src, int start) {
 string substring(string src, int start, int end) {
 	string out = "";
 	for (int i = start; i < end; i++) out += src.at(i);
+	cout << out;
+	cout << "\n";
 	return out;
 }
 

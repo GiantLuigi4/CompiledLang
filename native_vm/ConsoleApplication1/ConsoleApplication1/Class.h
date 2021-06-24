@@ -20,4 +20,8 @@ class Class {
 	public: Executor* executor;
 	public: string name;
 	public: string nativeName;
+	public: Class* asPointer();
+	public: Object runMethod(string, string, vector<Object>);
+	public: Object add(Object self, Object other);
+	public: Object subtract(Object self, Object other);
 };

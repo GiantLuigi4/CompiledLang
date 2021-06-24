@@ -21,4 +21,5 @@ class Method {
 	public: vector<Instruction> insns;
 	public: void load(string name, string desc, string stream, bool isPublic, bool isStatic);
 	public: Object run(LocalCapture);
+	public: Method* asPointer();
 };
