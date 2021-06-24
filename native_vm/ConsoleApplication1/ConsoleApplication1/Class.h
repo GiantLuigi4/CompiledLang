@@ -20,4 +20,5 @@ class Class {
 	public: Executor* executor;
 	public: string name;
 	public: string nativeName;
+	public: Class* pointer;
 };

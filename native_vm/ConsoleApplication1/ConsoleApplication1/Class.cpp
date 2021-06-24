@@ -104,6 +104,7 @@ void Class::load(string text) {
 }
 
 Class::Class() {
+	pointer = this;
 }
 
 Class::~Class() {

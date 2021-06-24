@@ -92,6 +92,10 @@ Object Method::run(LocalCapture locals) {
 		string name;
 		string ainfo1 = instruction.ainfo1;
 		int num;
+		cout << instruction.id;
+		cout << "\n";
+		cout << clazz->executor->getOrLoad((char*)((((string)"I").c_str()))).nativeName;
+		cout << "\n";
 		switch ((int) instruction.id) {
 			case -4:
 				if (startsWith(instruction.ainfo1, "T")) {
@@ -116,6 +120,10 @@ Object Method::run(LocalCapture locals) {
 				if (ainfo1 == "") {
 					Object o = Object();
 					o.intVal = (int*) instruction.ainfo0I;
+					Class* oclazz = clazz->executor->getOrLoad((char*)((((string)"I").c_str()))).pointer;
+					oclazz->nativeName = "I";
+					oclazz.name = "int";
+					o.clazz = oclazz;
 					stack.push_back(o);
 					break;
 				} else {
@@ -124,6 +132,10 @@ Object Method::run(LocalCapture locals) {
 							Object o = Object();
 							o.intVal = (int*) instruction.ainfo0I;
 							stack.push_back(o);
+							Class* oclazz = clazz->executor->getOrLoad((char*)((((string)"I").c_str()))).pointer;
+							oclazz->nativeName = "I";
+							oclazz.name = "int";
+							o.clazz = oclazz;
 							break;
 						} default: break; // TODO
 						// TODO: other cases
