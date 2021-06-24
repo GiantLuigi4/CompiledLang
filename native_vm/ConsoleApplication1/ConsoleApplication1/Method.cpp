@@ -87,6 +87,10 @@ void Method::load(string name, string desc, string text, bool isPublic, bool isS
 
 Object Method::run(LocalCapture locals) {
 	cout << "Running " + name + "\n";
+	cout << clazz;
+	cout << "\n";
+	cout << clazz->executor;
+	cout << "\n";
 	vector<Object> stack = vector<Object>();
 //	Map labelStackStates = Map();
 //	Map labelLabelStates = Map();
@@ -103,22 +107,22 @@ Object Method::run(LocalCapture locals) {
 		Class* type;
 		int localId;
 		string methodName;
-		cout << (int)instruction.id;
+
+		cout << clazz->executor;
 		cout << "\n";
+
 		switch ((int) instruction.id) {
 			case -4:
-				cout << "AAAAAAAAAAAAAAAAAAAAAAAAAA";
 				if (startsWith(instruction.ainfo1, "T")) {
 					ainfo1 = substring(instruction.ainfo1, 1, instruction.ainfo1.length() - 1);
 					name = instruction.ainfo1;
 					name += ".langclass";
-					locals.addLocal(clazz->executor->getOrLoad((char*)name.c_str()));
+//					locals.addLocal(clazz->executor->getOrLoad((char*)name.c_str()));
 					break;
 				}
-				cout << "AAAAAAAAAAAAAAAAAAAAAAAAAA";
 				name = instruction.ainfo1;
-				locals.addLocal(clazz->executor->getOrLoad((char*)name.c_str()));
-				cout << locals.getType(locals.types.size() - 1)->name;
+//				locals.addLocal(clazz->executor->getOrLoad((char*)name.c_str()));
+//				cout << locals.getType(locals.types.size() - 1)->name;
 				cout << " l";
 				cout << instruction.ainfo0;
 				cout << ";\n";
@@ -209,9 +213,9 @@ Object Method::run(LocalCapture locals) {
 					methodName = substring(methodName, lastIndexOf(methodName, '.') + 1);
 					type = clazz->executor->getOrLoad((char*) className.c_str()).asPointer();
 				}
-				if (endsWith(instruction.ainfo1, "V"))
-					clazz->runMethod(methodName, instruction.ainfo1, stack);
-				else stack.push_back(clazz->runMethod(methodName, instruction.ainfo1, stack));
+//				if (endsWith(instruction.ainfo1, "V"))
+//					clazz->runMethod(methodName, instruction.ainfo1, stack);
+//				else stack.push_back(clazz->runMethod(methodName, instruction.ainfo1, stack));
 				break;
 			case -10:
 				cout << "Method ended with no return statement\n";

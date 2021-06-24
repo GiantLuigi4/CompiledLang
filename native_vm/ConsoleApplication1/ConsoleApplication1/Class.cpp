@@ -10,6 +10,9 @@
 using namespace std;
 
 void Class::load(string text) {
+	cout << "loaded by ";
+	cout << executor;
+	cout << "\n";
 	string name = "";
 	string stream = "";
 	string temp = "";
@@ -112,7 +115,7 @@ Class::~Class() {
 }
 
 Object Class::add(Object self, Object other) {
-	switch (nativeName.at(0)) {
+/*	switch (nativeName.at(0)) {
 		case 'I':
 			// TODO: check other object's native name
 			Object out = Object();
@@ -120,7 +123,8 @@ Object Class::add(Object self, Object other) {
 			out.clazz = this;
 			return out;
 			break;
-	}
+	}*/
+	return self;
 	throw new runtime_error("Operator Overloads are NYI");
 }
 
