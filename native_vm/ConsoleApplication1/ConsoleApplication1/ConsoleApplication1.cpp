@@ -31,7 +31,7 @@ int main() {
 	myfile1 << contents;
 	myfile1.close();*/
 
-	Class c = executor.getOrLoad((char*) "TestClass1.langclass");
+	Class c = executor.load((char*) "TestClass1.langclass");
 	c = executor.getOrLoad((char*) "TestClass1.langclass");
 	c = executor.getOrLoad((char*) "TestClass1.langclass");
 	c = executor.getOrLoad((char*) "TestClass1.langclass");
@@ -39,14 +39,17 @@ int main() {
 	cout << m.name + "\n";
 	cout << (int) m.run(LocalCapture()).intVal;
 	cout << "\n";
+	c.executor = executor.asPointer();
 	m = c.methods[1];
 	cout << m.name + "\n";
 	cout << (int) m.run(LocalCapture()).intVal;
 	cout << "\n";
+	c.executor = executor.asPointer();
 	m = c.methods[3];
 	cout << m.name + "\n";
 	cout << (int) m.run(LocalCapture()).intVal;
 	cout << "\n";
+	c.executor = executor.asPointer();
 
 	return 0;
 }

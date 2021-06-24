@@ -13,7 +13,6 @@ Executor::Executor() {
 	clazz.executor = this;
 	clazz.nativeName = "I";
 	classes.push_back(clazz);
-	classesLoaded++;
 //	cout << "HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH";
 //	cout << classes[0].name;
 }
@@ -29,14 +28,19 @@ Class Executor::load(char* filename) {
 	clazz.executor = this;
 	clazz.load(read(filename));
 	classes.push_back(clazz);
-	classesLoaded++;
 	return clazz;
 }
 
 Class Executor::getOrLoad(char* filename) {
-//	for (Class c : classes) {
-	for (int i = 0; i < classesLoaded; i++) {
-		Class c = classes[i];
+	cout << this;
+	cout << "\n";
+//	cout << classes[1].name;
+	for (Class c : classes) {
+//	for (int i = 0; i < classesLoaded; i++) {
+//		Class c = classes[i];
+		c.executor = this;
+		cout << this;
+		cout << "\n";
 /*		cout << c.name;
 		cout << "\n";
 		cout << c.nativeName;
@@ -60,4 +64,8 @@ Class Executor::get(char* filename) {
 			return c;
 	}
 	throw new runtime_error("Class " + (string) filename + " is not present.");
+}
+
+Executor* Executor::asPointer() {
+	return this;
 }

@@ -13,4 +13,5 @@ class Executor {
 	public: Class get(char* filename);
 	public: Class getOrLoad(char* filename);
 	public: int classesLoaded;
+	public: Executor* asPointer();
 };
