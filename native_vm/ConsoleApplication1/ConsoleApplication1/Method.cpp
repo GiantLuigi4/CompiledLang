@@ -138,6 +138,7 @@ Object Method::run(LocalCapture locals) {
 			case -14:
 				stack.push_back(locals.getLocal(instruction.ainfo0I));
 				break;
+			case -16:
 			case -10:
 				cout << "Method ended with no return statement\n";
 				throw new runtime_error("Method ended with no return statement");

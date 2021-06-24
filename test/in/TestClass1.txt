@@ -1,0 +1,44 @@
+class TestClass1
+	method testMethod PS()I
+		local test I
+		push
+			loadc 53
+			setl test
+		pop
+		loadl test
+		return
+	end
+
+	method main PS()I
+		local test I
+		push
+			loadc 8
+			setl test
+		pop
+		push
+			loadc 64
+			math test +
+		pop
+		loadl test
+		return
+	end
+
+	method test PS(I)I
+		push
+			loadc 32
+			setl !0
+		pop
+		loadl !0
+		return
+	end
+
+	method invokeStaticTest PS()I
+		local test I
+		push
+			loadc 45
+			istatic test (I)I
+			setl test
+		pop
+		loadl test
+		return
+	end

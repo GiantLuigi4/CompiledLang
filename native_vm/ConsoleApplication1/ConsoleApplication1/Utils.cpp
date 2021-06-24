@@ -39,6 +39,25 @@ bool startsWith(string src, string prefix) {
 	return true;
 }
 
+// TODO: convert this to a regex check
+bool contains(string src, char check) {
+	/*	// if the check is longer then the string, then it is clearly not in the string
+		if (check.length() > src.length()) return false;
+		int length = (int)check.length();
+		// iterate over all characters in both strings up until the length of val, if any of the characters in the target string do not match the provided prefix, then return false
+		for (int i = 0; i < length; i++) if (check.at(i) != src.at(i)) return false;*/
+	for (int i = 0; i < (int)src.length(); i++)
+		if (src.at(i) == check)
+			return true;
+	return false;
+}
+
+int lastIndexOf(string src, char check) {
+	for (int i = ((int)src.length()) - 1; i >= 0; i++)
+		if (src.at(i) == check) return i;
+	return -1;
+}
+
 bool equals(string src, string targ) {
 	// if the prefix is longer then the string, then it is clearly not at the start of the string
 /*	cout << targ.length();
