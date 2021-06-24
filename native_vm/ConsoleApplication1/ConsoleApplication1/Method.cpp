@@ -4,6 +4,9 @@
 #include <vector>
 #include "Instruction.h"
 #include "Utils.h"
+#include "Executor.h"
+#include "LocalCapture.h"
+#include "Map.h"
 using namespace std;
 
 Method::Method() {
@@ -76,4 +79,76 @@ void Method::load(string name, string desc, string text, bool isPublic, bool isS
 //	myfile1.open("method.txt");
 //	myfile1 << str;
 //	myfile1.close();
+}
+
+Object Method::run(LocalCapture locals) {
+	vector<Object> stack = vector<Object>();
+//	Map labelStackStates = Map();
+//	Map labelLabelStates = Map();
+//	Map labelPoints = Map();
+	vector<int> pushPoints = vector<int>();
+	for (int i = 0; i < insns.capacity(); i++) {
+		Instruction instruction = insns[i];
+		string name;
+		string ainfo1 = instruction.ainfo1;
+		int num;
+		switch ((int) instruction.id) {
+			case -4:
+				if (startsWith(instruction.ainfo1, "T")) {
+					ainfo1 = substring(instruction.ainfo1, 1, instruction.ainfo1.length() - 1);
+					name = instruction.ainfo1;
+					name += ".langclass";
+					locals.addLocal(clazz->executor->getOrLoad((char*)name.c_str()));
+					break;
+				}
+				name = instruction.ainfo1;
+				locals.addLocal(clazz->executor->getOrLoad((char*)name.c_str()));
+				break;
+			case -5:
+				pushPoints.push_back(stack.size());
+				break;
+			case -6:
+				num = pushPoints[pushPoints.size() - 1];
+				pushPoints.pop_back();
+				while (stack.size() != num) stack.pop_back();
+				break;
+			case -7:
+				if (ainfo1 == "") {
+					Object o = Object();
+					o.intVal = (int*) instruction.ainfo0I;
+					stack.push_back(o);
+					break;
+				} else {
+					switch (ainfo1.at(0)) {
+						case 'I': {
+							Object o = Object();
+							o.intVal = (int*) instruction.ainfo0I;
+							stack.push_back(o);
+							break;
+						} default: break; // TODO
+						// TODO: other cases
+					}
+				}
+				break;
+			case -8:
+				locals.setLocal(instruction.ainfo0I, stack[stack.size() - 1]);
+				break;
+			case -13:
+				return stack[stack.size() - 1];
+			case -14:
+				stack.push_back(locals.getLocal(instruction.ainfo0I));
+				break;
+			case -10:
+				cout << "Method ended with no return statement\n";
+				throw new runtime_error("Method ended with no return statement");
+			default:
+//				cout << "Invalid Opcode " + (int) instruction.id;
+				cout << "Invalid Opcode ";
+				cout << (int) instruction.id;
+				cout << "\n";
+				throw new runtime_error("Invalid Opcode " + instruction.id);
+		}
+	}
+	cout << "Method ended with no return statement\n";
+	throw new runtime_error("Method ended with no return statement");
 }

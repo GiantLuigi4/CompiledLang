@@ -10,6 +10,10 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include "Method.h"
+#include "Class.h"
+#include "LocalCapture.h"
+#include <list>
 using namespace std;
 
 using namespace std;
@@ -27,7 +31,12 @@ int main() {
 	myfile1 << contents;
 	myfile1.close();
 
-	executor.load((char*) "TestClass1.langclass");
-	
+	Class c = executor.getOrLoad((char*) "TestClass1.langclass");
+	c = executor.getOrLoad((char*) "TestClass1.langclass");
+	c = executor.getOrLoad((char*) "TestClass1.langclass");
+	c = executor.getOrLoad((char*) "TestClass1.langclass");
+	Method m = c.methods[0];
+	cout << m.run(LocalCapture()).intVal;
+
 	return 0;
 }

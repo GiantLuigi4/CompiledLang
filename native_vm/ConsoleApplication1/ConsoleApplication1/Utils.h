@@ -6,6 +6,7 @@
 extern int opcodeBytes[];
 std::string read(std::string);
 bool startsWith(std::string, std::string);
+bool equals(std::string, std::string);
 std::string substring(std::string, int);
 std::string substring(std::string, int, int);
 bool isInt(std::string);

@@ -4,7 +4,7 @@
 #include <string>
 #include "Method.h"
 #include "Utils.h"
-#include <list>
+#include <vector>
 using namespace std;
 
 void Class::load(string text) {
@@ -100,7 +100,7 @@ void Class::load(string text) {
 	// TODO: inheritance defaulting
 	// TODO: call static init
 	this->name = name;
-	cout << this->name;
+	cout << this->name + "\n";
 }
 
 Class::Class() {

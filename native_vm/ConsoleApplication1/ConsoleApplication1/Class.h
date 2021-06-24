@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include <list>
+#include <vector>
 #include <map>
 #include "Method.h"
 #include "Object.h"
@@ -12,9 +12,10 @@ class Class {
 	public: Class();
 	public: ~Class();
 	public: void load(string text);
-	public: list<Method> methods;
+	public: vector<Method> methods;
 	public: map<string, Object> staticFields;
 	public: map<string, Object> instanceFields;
 	public: Executor* executor;
 	public: string name;
+	public: string nativeName;
 };

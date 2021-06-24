@@ -2,10 +2,12 @@
 
 #include <string>
 #include <vector>
+#include "Object.h"
 #include "Instruction.h"
 using namespace std;
 
 class Class;
+class LocalCapture;
 
 class Method {
 	public: Method();
@@ -17,4 +19,5 @@ class Method {
 	public: string descriptor;
 	public: vector<Instruction> insns;
 	public: void load(string name, string desc, string stream, bool isPublic, bool isStatic);
+	public: Object run(LocalCapture);
 };
