@@ -24,12 +24,12 @@ int main() {
 
 	Executor executor = Executor();
 
-	string contents = read("TestClass1.langclass");
+/*	string contents = read("TestClass1.langclass");
 
 	ofstream myfile1;
 	myfile1.open("example.txt");
 	myfile1 << contents;
-	myfile1.close();
+	myfile1.close();*/
 
 	Class c = executor.getOrLoad((char*) "TestClass1.langclass");
 	c = executor.getOrLoad((char*) "TestClass1.langclass");
