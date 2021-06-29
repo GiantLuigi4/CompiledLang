@@ -18,6 +18,12 @@ class Class {
 	public: map<string, Object> staticFields;
 	public: map<string, Object> instanceFields;
 	public: Executor* executor;
-	public: string name;
-	public: string nativeName;
+	private: string name;
+	private: string nativeName;
+	public: string getName();
+	public: void setName(string name);
+	public: string getNativeName();
+	public: void setNativeName(string name);
+	public: Object add(Object self, Object other);
+	public: Object subtract(Object self, Object other);
 };

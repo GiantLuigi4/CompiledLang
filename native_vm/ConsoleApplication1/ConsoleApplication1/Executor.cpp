@@ -9,12 +9,12 @@ using namespace std;
 
 Executor::Executor() {
 	Class clazz = Class();
-	clazz.name = "int";
+	clazz.setName("int");
 	clazz.executor = this;
-	clazz.nativeName = "I";
+	clazz.setNativeName("I");
 	classes.push_back(clazz);
 	cout << "HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH";
-	cout << classes[0].name;
+	cout << classes[0].getName();
 }
 
 Executor::~Executor() {
@@ -41,8 +41,8 @@ Class Executor::getOrLoad(char* filename) {
 		cout << "\n";
 		cout << "\n";*/
 		if (
-			equals(c.name + (string)".langclass", (string)(filename)) || 
-			equals(c.nativeName, (string)(filename))
+			equals(c.getName() + (string)".langclass", (string)(filename)) || 
+			equals(c.getNativeName(), (string)(filename))
 			)
 		//if (c.name + (string)".langclass" == (string)(filename) || c.nativeName.c_str() == filename)
 			return c;
@@ -52,7 +52,7 @@ Class Executor::getOrLoad(char* filename) {
 
 Class Executor::get(char* filename) {
 	for (Class c : classes) {
-		if (c.name.c_str() == filename || c.nativeName.c_str() == filename)
+		if (c.getName().c_str() == filename || c.getNativeName().c_str() == filename)
 			return c;
 	}
 	throw new runtime_error("Class " + (string) filename + " is not present.");

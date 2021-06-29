@@ -7,7 +7,24 @@
 #include <vector>
 using namespace std;
 
+string Class::getName() {
+	return name;
+}
+
+string Class::getNativeName() {
+	return nativeName;
+}
+
+void Class::setName(string newName) {
+	name = newName;
+}
+
+void Class::setNativeName(string newName) {
+	nativeName = newName;
+}
+
 void Class::load(string text) {
+	cout << text;
 	string name = "";
 	string stream = "";
 	string temp = "";
@@ -18,6 +35,8 @@ void Class::load(string text) {
 	int tempB = 0;
 	int size = (int)text.length();
 	for (int index = 0; index < size; index++) {
+		cout << index;
+		cout << "\n";
 		int b = (int) text.at(index);
 		// TODO
 //		cout << (int)text.at(index);
@@ -107,4 +126,31 @@ Class::Class() {
 }
 
 Class::~Class() {
+}
+
+Object Class::add(Object self, Object other) {
+	cout << nativeName;
+	switch (nativeName.at(0)) {
+	case 'I':
+		// TODO: check other object's native name
+		Object out = Object();
+		out.intVal = (int*)((int)self.intVal + (int)other.intVal);
+		out.clazz = this;
+		return out;
+		break;
+	}
+	throw new runtime_error("Operator Overloads are NYI");
+}
+
+Object Class::subtract(Object self, Object other) {
+	switch (nativeName.at(0)) {
+	case 'I':
+		// TODO: check other object's native name
+		Object out = Object();
+		out.intVal = (int*)((int)self.intVal - (int)other.intVal);
+		out.clazz = this;
+		return out;
+		break;
+	}
+	throw new runtime_error("Operator Overloads are NYI");
 }

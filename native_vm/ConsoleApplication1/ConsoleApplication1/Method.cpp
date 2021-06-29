@@ -138,7 +138,47 @@ Object Method::run(LocalCapture locals) {
 			case -14:
 				stack.push_back(locals.getLocal(instruction.ainfo0I));
 				break;
-			case -10:
+			case -15: {
+				Object lastStackField = stack[stack.size() - 1];
+				int localId = instruction.ainfo0I;
+				Object local = locals.getLocal(localId);
+//				Class* type = locals.getType(localId);
+				Class* type = local.clazz;
+				Object out;
+
+				cout << type;
+				cout << "\n";
+				cout << type->getNativeName();
+				cout << "\n";
+
+				cout << "l" + instruction.ainfo0 + " = ";
+				cout << (int)lastStackField.intVal;
+				cout << " " + instruction.ainfo1 + " ";
+				cout << (int)local.intVal;
+				cout << "; // = ";
+
+				switch (instruction.ainfo1.at(0)) {
+					case '+':
+						out = type->add(local, lastStackField);
+						cout << (int)out.intVal;
+						break;
+					case '-':
+						out = type->subtract(local, lastStackField);
+						break;
+					case '/':
+//						out = type->divide(local, lastStackField);
+						break;
+					case '*':
+//						out = type->multiply(local, lastStackField);
+						break;
+						// TODO: modulus
+					default:
+						throw new runtime_error("Invalid or no operator provided");
+				}
+				cout << "\n";
+				locals.setLocal(localId, out);
+				break;
+			} case -10:
 				cout << "Method ended with no return statement\n";
 				throw new runtime_error("Method ended with no return statement");
 			default:

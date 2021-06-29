@@ -1,0 +1,57 @@
+class TestClass P
+	method main PS()I
+		local localInt I
+		local localDouble D
+		push
+			loadc 45.5 D
+			setl localDouble
+		pop
+		push
+			loadc 23 I
+			setl localInt
+		pop
+		push
+			loadl localDouble
+			math localInt +
+		pop
+		loadl localInt
+		return
+	end
+
+	method main2 PS()I
+		local test TTestClass;
+		push
+			instance TestClass ()TTestClass;
+			setl test
+		pop
+		pushl
+			local !worker I
+
+			push
+				loadc 12 I
+				setl !worker
+			pop
+
+			push
+				loadf testField test
+				math !worker +
+			pop
+			push
+				loadl !worker
+				setf testField test
+			pop
+		popl
+		loadf testField test
+		return
+	end
+
+	field testField P|I
+
+	method <init> ()TTestClass;
+		push
+			loadc 32 I
+			setf testField !this
+		pop
+		loadl !this
+		return
+	end
